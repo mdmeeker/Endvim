@@ -4,7 +4,7 @@
 (set vim.env.PATH (.. vim.env.PATH ":" (vim.fn.stdpath :data) :/mason/bin))
 
 ;; improve updatetime for quicker refresh + gitsigns
-(set! updatetime 200)
+(set! updatetime 0)
 (set! timeoutlen 500)
 
 ;; Set shortmess
@@ -40,7 +40,8 @@
 (set! cmdheight 0)
 
 ;; Numbering
-(set! nonumber)
+(set! number)
+(set! relativenumber)
 
 ;; Smart search
 (set! smartcase)
@@ -75,4 +76,14 @@
 ;; colorscheme
 (set! background :dark)
 (set! guifont "Liga SFMono Nerd Font:h15")
+
+;; shell
+(set! shell "/bin/zsh")
+(set! ignorecase)
+
+(set! hidden)
+(set! lazyredraw)
+
+
+
 

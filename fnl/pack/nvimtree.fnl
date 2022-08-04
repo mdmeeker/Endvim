@@ -6,7 +6,7 @@
         :hijack_cursor true
         :update_cwd true
         :git {:enable false :ignore true}
-        :hijack_directories {:enable true :auto_open true}
+        :hijack_directories {:enable false :auto_open true}
         :actions {:open_file {:resize_window true}}
         :renderer {:indent_markers {:enable false}}})
 
