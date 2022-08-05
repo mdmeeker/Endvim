@@ -1,7 +1,7 @@
 -- Author: Matthew Meeker
 
-
 local fn = vim.fn
+package.path = package.path .. ";/?.lua"
 
 -- If packer is not found in the path described below, installs and asks the user
 -- to restart nvim
