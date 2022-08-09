@@ -91,7 +91,6 @@
                                       :config (load-file lsp)}) 
 
 ;; Language-specific functionality
-;; (use-package! :mfussenegger/nvim-jdtls {:ft :java :config (load-lang java)})
 (use-package! :saecki/crates.nvim {:event ["BufRead Cargo.toml"] :config (call-setup crates)})
 (use-package! :simrat39/rust-tools.nvim {:ft :rust :branch :modularize_and_inlay_rewrite :config (load-lang rust)}) 
 
@@ -111,6 +110,7 @@
                :requires [(pack :hrsh7th/cmp-path {:after :nvim-cmp})
                           (pack :hrsh7th/cmp-buffer {:after :nvim-cmp})
                           (pack :hrsh7th/cmp-nvim-lsp {:after :nvim-cmp})
+                          (pack :hrsh7th/cmp-cmdline {:after :nvim-cmp})
                           (pack :PaterJason/cmp-conjure {:after :conjure})
                           (pack :saadparwaiz1/cmp_luasnip {:after :nvim-cmp})
                           (pack :lukas-reineke/cmp-under-comparator {:module :cmp-under-comparator})
@@ -122,7 +122,10 @@
 ;; aesthetics
 (use-package! :kyazdani42/nvim-web-devicons {:module :nvim-web-devicons})
 (use-package! :Pocco81/true-zen.nvim {:cmd :TZAtaraxis :config (load-file truezen)})
+;;; Colorschemes
 (use-package! :shaunsingh/oxocarbon.nvim {:run :./install.sh}) 
+(use-package! :folke/tokyonight.nvim)
+
 (use-package! :monkoose/matchparen.nvim {:opt true
                                          :config (load-file matchparen)
                                          :setup (fn []

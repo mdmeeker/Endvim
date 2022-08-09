@@ -106,3 +106,10 @@
                                (set vim-item.menu vim-item.kind)
                                (set vim-item.kind (. icons vim-item.kind))
                                vim-item)}})
+
+(setup.cmdline "/" {:mapping (mapping.preset.cmdline)
+                    :sources [{:name :buffer}]})
+
+(setup.cmdline ":" {:mapping (mapping.preset.cmdline)
+                    :sources [{:name :path}
+                              {:name :cmdline}]})
