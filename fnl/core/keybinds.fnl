@@ -30,7 +30,7 @@
 (map! [n] "<A-k>" ":resize +5<cr>")
 (map! [n] "<A-l>" ":vertical resize +5<cr>")
 
-;; QoL faster access
+;; Alt keys for faster access to quick commands
 (map! [n] "<A-w>" "<cmd>w<CR>")
 (map! [n] "<A-q>" "<cmd>q<CR>")
 
@@ -38,5 +38,30 @@
 (map! [n] "<" "<<")
 (map! [n] ">" ">>")
 
+;; The function keys
+(map! [n] "<F1>" "<cmd>ToggleTerm<CR>")
+(map! [n] "<F2>" "<cmd>NvimTreeToggle<CR>")
+(map! [n] "<F3>" "<cmd>vnew term://zsh<CR>")
+
+;; A mix of things...
+(map! [n] "<leader>y" "<cmd>Trouble workspace_diagnostics<CR>")
+(map! [n] "<leader>s" "<cmd>SymbolsOutline<CR>")
+
+;; Comment toggling
+(map! [n] "<leader>c" "<cmd>CommentToggle<CR>")
+(map! [x] "<leader>c" "<cmd>'<,'>CommentToggle<CR>")
+(map! [n] "<leader>p" "<cmd>Trouble workspace_diagnostics<CR>")
+
+;; Gitsigns
+(map! [n] "<leader>h" "<cmd>Gitsigns preview_hunk<CR>")
+(map! [n] "<leader>j" "<cmd>Gitsigns reset_buffer<CR>")
+
+;; Buffers
+(map! [n] "<TAB>" "<cmd>bnext<CR>")
+(map! [n] "<S-TAB>" "<cmd>bprevious<CR>")
+
+
+;; Insert Mode
+(map! [i] "<Esc>" "<Esc>`^")
 
 

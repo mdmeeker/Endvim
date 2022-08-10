@@ -45,6 +45,6 @@
 (require :pack.pack)
 
 ;; colorscheme
-(colorscheme oxocarbon)
+(colorscheme nord)
 
 

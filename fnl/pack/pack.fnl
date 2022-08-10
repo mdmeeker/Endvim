@@ -47,7 +47,7 @@
 
 ;; Mappings
 (use-package! :anuvyklack/hydra.nvim {:keys :<space> :config (load-file hydras)})
-(use-package! :windwp/nvim-autopairs {:event :InsertEnter :config (load-file autopairs)})
+(use-package! :windwp/nvim-autopairs {:event :VimEnter :config (load-file autopairs)})
 (use-package! :ggandor/leap.nvim {:setup (fn []
                                           ((. (require :utils.lazy-load)
                                               :load-on-file-open!) :leap.nvim))
@@ -55,9 +55,9 @@
                                             ((. (require :leap) :set_default_keymaps)))})
 
 ;; File navigation
-(use-package! :kyazdani42/nvim-tree.lua {:cmd :NvimTreeToggle :config (load-file nvimtree)})
+(use-package! :kyazdani42/nvim-tree.lua {:event :VimEnter :config (load-file nvimtree)})
 (use-package! :nvim-lua/telescope.nvim
-              {:cmd :Telescope
+              {:event :VimEnter
                :config (load-file telescope)
                :requires [(pack :nvim-telescope/telescope-project.nvim
                                 {:module :telescope._extensions.project})
@@ -106,7 +106,7 @@
 (use-package! :hrsh7th/nvim-cmp
               {:config (load-file cmp)
                :wants :LuaSnip
-               :event :InsertEnter
+               :event :VimEnter
                :requires [(pack :hrsh7th/cmp-path {:after :nvim-cmp})
                           (pack :hrsh7th/cmp-buffer {:after :nvim-cmp})
                           (pack :hrsh7th/cmp-nvim-lsp {:after :nvim-cmp})
@@ -114,7 +114,7 @@
                           (pack :PaterJason/cmp-conjure {:after :conjure})
                           (pack :saadparwaiz1/cmp_luasnip {:after :nvim-cmp})
                           (pack :lukas-reineke/cmp-under-comparator {:module :cmp-under-comparator})
-                          (pack :L3MON4D3/LuaSnip {:event :InsertEnter
+                          (pack :L3MON4D3/LuaSnip {:event :VimEnter
                                                    :wants :friendly-snippets
                                                    :config (load-file luasnip)
                                                    :requires [(pack :rafamadriz/friendly-snippets)]})]})
@@ -124,7 +124,12 @@
 (use-package! :Pocco81/true-zen.nvim {:cmd :TZAtaraxis :config (load-file truezen)})
 ;;; Colorschemes
 (use-package! :shaunsingh/oxocarbon.nvim {:run :./install.sh}) 
+(use-package! :shaunsingh/nord.nvim)
 (use-package! :folke/tokyonight.nvim)
+(use-package! :morhetz/gruvbox)
+(use-package! :catppuccin/nvim)
+(use-package! :bluz71/vim-moonfly-colors)
+(use-package! :EdenEast/nightfox.nvim)
 
 (use-package! :monkoose/matchparen.nvim {:opt true
                                          :config (load-file matchparen)
@@ -146,6 +151,17 @@
 
 ;; Notes: orgmode was previously supported, but its quite buggy and not up to part with emacs. I think neorg is the way to go. Feel free to add back org-mode if you want to though!
 (use-package! :nvim-neorg/neorg {:config (load-file neorg) :ft :norg :after :nvim-treesitter})
+
+;; Toggle term
+(use-package! :terrortylor/nvim-comment {:setup (load-file commentary)})
+(use-package! :akinsho/toggleterm.nvim)
+(use-package! :b0o/incline.nvim {:setup (load-file incline)})
+(use-package! :karb94/neoscroll.nvim {:setup (load-file neoscroll)})
+(use-package! :lewis6991/impatient.nvim 
+  {:setup (load-file impatient)})
+(use-package! :simrat39/symbols-outline.nvim) 
+
+
 
 ;; At the end of the file, the unpack! macro is called to initialize packer and pass each package to the packer.nvim plugin.
 (unpack!)
