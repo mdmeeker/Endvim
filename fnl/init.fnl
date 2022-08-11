@@ -45,7 +45,7 @@
 (require :pack.pack)
 
 ;; colorscheme
-(colorscheme onenord)
+(colorscheme nord)
 
 
 ;; set neovim background to transparent so that we can still get the nice 
