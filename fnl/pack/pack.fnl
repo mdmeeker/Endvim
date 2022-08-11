@@ -130,6 +130,7 @@
 (use-package! :catppuccin/nvim)
 (use-package! :bluz71/vim-moonfly-colors)
 (use-package! :EdenEast/nightfox.nvim)
+(use-package! :rmehri01/onenord.nvim {:config (call-setup onenord)})
 
 (use-package! :monkoose/matchparen.nvim {:opt true
                                          :config (load-file matchparen)
@@ -152,7 +153,6 @@
 ;; Notes: orgmode was previously supported, but its quite buggy and not up to part with emacs. I think neorg is the way to go. Feel free to add back org-mode if you want to though!
 (use-package! :nvim-neorg/neorg {:config (load-file neorg) :ft :norg :after :nvim-treesitter})
 
-;; Toggle term
 ;;(use-package! :terrortylor/nvim-comment {:setup (load-file commentary)})
 (use-package! :terrortylor/nvim-comment)
 ;;(use-package! :akinsho/toggleterm.nvim {:config (call-setup toggleterm)})

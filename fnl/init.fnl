@@ -48,3 +48,7 @@
 (colorscheme nord)
 
 
+;; set neovim background to transparent so that we can still get the nice 
+;; transparency from iTerm2
+
+(vim.api.nvim_command :GoTransparent)
