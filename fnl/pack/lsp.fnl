@@ -88,10 +88,16 @@
                  :flags {:debounce_text_changes 150}})
 
 ;; for simple servers jsut add them to the list
-(let [servers [:clojure_lsp
-               :rnix
-               :jdtls
-               :pyright]]
+(let [servers [:jdtls
+               :pyright
+               :clangd
+               :gopls
+               :hls
+               :julials
+               :texlab
+               :ocamllsp
+               :solc
+               :rust_analyzer]]
   (each [_ server (ipairs servers)]
     ((. (. lsp server) :setup) defaults)))
 
