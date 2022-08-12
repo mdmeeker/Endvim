@@ -156,8 +156,8 @@
 
 ;;(use-package! :terrortylor/nvim-comment {:setup (load-file commentary)})
 (use-package! :terrortylor/nvim-comment)
-;;(use-package! :akinsho/toggleterm.nvim {:config (call-setup toggleterm)})
-(use-package! :akinsho/toggleterm.nvim)
+(use-package! :akinsho/toggleterm.nvim {:config (load-file toggleterm)})
+;;(use-package! :akinsho/toggleterm.nvim)
 ;;(use-package! :b0o/incline.nvim {:setup (load-file incline)})
 (use-package! :b0o/incline.nvim)
 (use-package! :karb94/neoscroll.nvim)
