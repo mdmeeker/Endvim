@@ -130,7 +130,7 @@
 (use-package! :catppuccin/nvim)
 (use-package! :bluz71/vim-moonfly-colors)
 (use-package! :EdenEast/nightfox.nvim)
-(use-package! :rmehri01/onenord.nvim {:config (call-setup onenord)})
+;;(use-package! :rmehri01/onenord.nvim {:config (call-setup onenord)})
 (use-package! :marko-cerovac/material.nvim)
 
 (use-package! :monkoose/matchparen.nvim {:opt true
@@ -158,8 +158,8 @@
 (use-package! :terrortylor/nvim-comment)
 (use-package! :akinsho/toggleterm.nvim {:config (load-file toggleterm)})
 ;;(use-package! :akinsho/toggleterm.nvim)
-;;(use-package! :b0o/incline.nvim {:setup (load-file incline)})
-(use-package! :b0o/incline.nvim)
+(use-package! :b0o/incline.nvim {:config (load-file incline)})
+;;(use-package! :b0o/incline.nvim)
 (use-package! :karb94/neoscroll.nvim)
 ;;(use-package! :karb94/neoscroll.nvim {:setup (load-file neoscroll)})
 ;;(use-package! :lewis6991/impatient.nvim {:config (call-setup impatient)})
