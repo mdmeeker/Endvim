@@ -131,6 +131,7 @@
 (use-package! :bluz71/vim-moonfly-colors)
 (use-package! :EdenEast/nightfox.nvim)
 (use-package! :rmehri01/onenord.nvim {:config (call-setup onenord)})
+(use-package! :marko-cerovac/material.nvim)
 
 (use-package! :monkoose/matchparen.nvim {:opt true
                                          :config (load-file matchparen)

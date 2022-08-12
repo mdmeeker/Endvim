@@ -45,10 +45,10 @@
 (require :pack.pack)
 
 ;; colorscheme
-(colorscheme nord)
+(colorscheme material)
 
 
 ;; set neovim background to transparent so that we can still get the nice 
 ;; transparency from iTerm2
 
-(vim.api.nvim_command :GoTransparent)
+;; (vim.api.nvim_command :GoTransparent)
