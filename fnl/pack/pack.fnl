@@ -138,7 +138,7 @@
                                          :setup (fn []
                                                   ((. (require :utils.lazy-load)
                                                       :load-on-file-open!) :matchparen.nvim))})
-(use-package! :rcarriga/nvim-notify {:opt true
+(use-package! :rcarriga/nvim-notify {:opt true :lock true
                                      :setup (fn []
                                               (set vim.notify
                                                    (fn [msg level opts]
