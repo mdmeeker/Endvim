@@ -36,3 +36,88 @@
 ;; buf-map! bufer-local mappings
 ;; let! set a vim global
 ;; echo!/warn!/err! emit vim notifications
+
+
+;; NOTE: SETTINGS
+(set! clipboard :unnamedplus)
+(set! undofile)
+(set! noswapfile)
+(set! noruler)
+(set! noshowmode)
+
+(set! cmdheight 0)
+
+;; search, highlighting
+(set! smartcase)
+(set! incsearch)
+(set! hlsearch)
+(set! inccommand "nosplit")
+
+;; trailing characters
+(set! list)
+(set! listchars {:tab "> " :nbsp "␣" :trail "-"})
+
+;; indentation rules
+(set! copyindent)
+(set! smartindent)
+(set! preserveindent)
+
+(set! tabstop 2)
+(set! shiftwidth 2)
+(set! softtabstop 2)
+
+(set! expandtab)
+
+(set! cursorline)
+(set! nocursorcolumn)
+
+(set! splitright)
+(set! splitbelow)
+
+(set! completeopt [:menu :menuone :preview :noinsert])
+
+
+(set! number)
+(set! relativenumber)
+
+(set! shell "/bin/zsh")
+
+(set! autochdir)
+
+
+
+;; NOTE: KEYBINDS
+
+
+;; Window navigation...
+(map! [n] "<C-h>" "<C-w>h")
+(map! [n] "<C-j>" "<C-w>j")
+(map! [n] "<C-k>" "<C-w>k")
+(map! [n] "<C-l>" "<C-w>l")
+
+;; Window resizing
+(map! [n] "<A-h>" ":vertical resize -5<cr>")
+(map! [n] "<A-j>" ":resize -5<cr>")
+(map! [n] "<A-k>" ":resize +5<cr>")
+(map! [n] "<A-l>" ":vertical resize +5<cr>")
+
+;; Alt keys for faster access to quick commands
+(map! [n] "<A-w>" "<cmd>w<CR>")
+(map! [n] "<A-q>" "<cmd>q<CR>")
+
+;; Faster tabbing in and out
+(map! [n] "<" "<<")
+(map! [n] ">" ">>")
+
+;; The function keys
+(map! [n] "<F1>" "<cmd>ToggleTerm<CR>")
+(map! [n] "<F2>" "<cmd>NvimTreeToggle<CR>")
+(map! [n] "<F3>" "<cmd>vnew term://zsh<CR>")
+
+;; A mix of things...
+(map! [n] "<leader>y" "<cmd>Trouble workspace_diagnostics<CR>")
+(map! [n] "<leader>s" "<cmd>SymbolsOutline<CR>")
+
+;; Comment toggling
+(map! [n] "<leader>c" "<cmd>CommentToggle<CR>")
+(map! [x] "<leader>c" "<cmd>'<,'>CommentToggle<CR>")

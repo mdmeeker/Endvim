@@ -44,6 +44,13 @@
 ;; Put your plugins here
 ;; ---------------------
 
+(use-package! :EdenEast/nightfox.nvim)
+(use-package! :karb94/neoscroll.nvim)
+(use-package! :terrortylor/nvim-comment)
+(use-package! :akinsho/toggleterm.nvim)
+
+
+
 ;; Send plugins to packer
 (echo! "Installing Packages")
 (unpack!)
