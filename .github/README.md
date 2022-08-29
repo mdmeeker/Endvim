@@ -1,7 +1,6 @@
 # Endgame.nvim
 
-My pretty-much-endgame neovim setup, almost a port of [shaunsingh/nyoom.nvim](github.com/shaunsingh/nyoom.nvim)
-fron Fennel/ Rust back into Lua (I do not know Lisp).
+My pretty-much-endgame neovim setup, an extension/ edit/ fork of [shaunsingh/nyoom.nvim](github.com/shaunsingh/nyoom.nvim).
 
 ### Requirements
 
