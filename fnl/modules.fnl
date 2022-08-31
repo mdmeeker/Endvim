@@ -14,7 +14,7 @@
         indent-guides        ; highlighted indent columns
         modeline             ; snazzy, nano-emacs-inspired modeline
         nvimtree             ; a project drawer, like NERDTree for vim
-        tabs                 ; keep tabs on your buffers, literally
+        ;;tabs                 ; keep tabs on your buffers, literally
         vc-gutter            ; vcs diff in the fringe
         not-vi-tilde-fringe  ; disable fringe tildes to mark beyond EOB
         ;;window-select      ; visually switch windows
@@ -30,13 +30,13 @@
         scratch              ; emacs-like scratch buffer functionality
         word-wrap            ; soft wrapping with language-aware indent
 
-        :term
+        :term)
         ;;fshell             ; the fennel shell that works everywhere
-        toggleterm)          ; persistant/floating terminal wrapper for :term
+        ;;toggleterm)          ; persistant/floating terminal wrapper for :term
 
 (nyoom! :checkers
-        syntax              ; tasing you for every semicolon you forget
-        spell)              ; tasing you for misspelling mispelling
+        syntax)              ; tasing you for every semicolon you forget
+        ;;spell)              ; tasing you for misspelling mispelling
 
 (nyoom! :tools
         ;;profile            ; profile your configuration today

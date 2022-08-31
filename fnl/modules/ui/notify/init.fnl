@@ -2,6 +2,7 @@
 
 ; replacement for vim.notify
 (use-package! :rcarriga/nvim-notify {:opt true
+                                     :config (fn [] ((. (require :notify) :setup) {:background_color "#000000"}))
                                      :setup (fn []
                                               (set vim.notify
                                                    (fn [msg level opts]
