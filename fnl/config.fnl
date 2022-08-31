@@ -4,7 +4,7 @@
 
 ;; You can use the `colorscheme` macro to load a custom theme, or load it manually
 ;; via require. This is the default:
-(colorscheme carbon)
+(colorscheme nord)
 
 ;; The set! macro sets vim.opt options. By default it sets the option to true 
 ;; Appending `no` in front sets it to false. This determines the style of line 
@@ -121,3 +121,7 @@
 ;; Comment toggling
 (map! [n] "<leader>c" "<cmd>CommentToggle<CR>")
 (map! [x] "<leader>c" "<cmd>'<,'>CommentToggle<CR>")
+
+;; Transparent background... comment the two lines below
+(command! GoTransparent "hi normal guibg=000000")
+(vim.api.nvim_command :GoTransparent)
