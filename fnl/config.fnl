@@ -92,6 +92,18 @@
 (set! autochdir)
 
 
+;; NOTE: To be abnle to move in and out of the terminal instances...
+
+(fn _G.set_terminal_keymaps []
+  (local opts {:buffer 0})
+  (map! [t] "<esc>" "<C-\\><C-n>" opts)
+  (map! [t] "<C-h>" "<Cmd>wincmd h<CR>" opts)
+  (map! [t] "<C-j>" "<Cmd>wincmd j<CR>" opts)
+  (map! [t] "<C-k>" "<Cmd>wincmd k<CR>" opts)
+  (map! [t] "<C-l>" "<Cmd>wincmd l<CR>" opts))
+
+(vim.api.nvim_command "autocmd! TermOpen term://* lua set_terminal_keymaps()")
+
 
 ;; NOTE: KEYBINDS
 
@@ -117,9 +129,9 @@
 (map! [n] ">" ">>")
 
 ;; The function keys
-(map! [n] "<F1>" "<cmd>ToggleTerm<CR>")
+(map! [n] "<F1>" "<cmd>ToggleTerm direction=float<CR>")
 (map! [n] "<F2>" "<cmd>NvimTreeToggle<CR>")
-(map! [n] "<F3>" "<cmd>ToggleTerm direction=vertical<CR>")
+(map! [n] "<F3>" "<cmd>ToggleTerm direction=vertical size=75<CR>")
 
 ;; A mix of things...
 (map! [n] "<leader>y" "<cmd>Trouble workspace_diagnostics<CR>")
