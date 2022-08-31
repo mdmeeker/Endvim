@@ -9,6 +9,7 @@
 (let! nord_contrast true)
 (let! nord_borders true)
 (let! nord_disable_background true)
+(let! nord_enable_siderbar_background true)
 (let! nord_italic true)
 (colorscheme nord)
 
@@ -118,7 +119,7 @@
 ;; The function keys
 (map! [n] "<F1>" "<cmd>ToggleTerm<CR>")
 (map! [n] "<F2>" "<cmd>NvimTreeToggle<CR>")
-(map! [n] "<F3>" "<cmd>vnew term://zsh<CR>")
+(map! [n] "<F3>" "<cmd>ToggleTerm direction=vertical<CR>")
 
 ;; A mix of things...
 (map! [n] "<leader>y" "<cmd>Trouble workspace_diagnostics<CR>")
