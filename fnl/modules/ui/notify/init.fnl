@@ -10,4 +10,3 @@
                                                      (vim.notify msg level opts))))})
 
 
-

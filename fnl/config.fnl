@@ -1,9 +1,15 @@
 (require-macros :macros)
+
 ;; Place your private configuration here! Remember, you do not need to run 'nyoom
 ;; sync' after modifying this file!
 
+
 ;; You can use the `colorscheme` macro to load a custom theme, or load it manually
 ;; via require. This is the default:
+(let! nord_contrast true)
+(let! nord_borders true)
+(let! nord_disable_background true)
+(let! nord_italic true)
 (colorscheme nord)
 
 ;; The set! macro sets vim.opt options. By default it sets the option to true 
@@ -122,6 +128,3 @@
 (map! [n] "<leader>c" "<cmd>CommentToggle<CR>")
 (map! [x] "<leader>c" "<cmd>'<,'>CommentToggle<CR>")
 
-;; Transparent background... comment the two lines below
-(command! GoTransparent "hi normal guibg=000000")
-(vim.api.nvim_command :GoTransparent)
