@@ -56,7 +56,7 @@
                  :flags {:debounce_text_changes 150}})
 
 ;; conditional lsp servesr
-(local lsp-servers [:clangd :gopls :hls :solc :rust_analyzer])
+(local lsp-servers [:clangd :gopls :hls :solc :rust_analyzer :ocamllsp])
 
 (nyoom-module-p! clojure
   (table.insert lsp-servers :clojure-lsp))
