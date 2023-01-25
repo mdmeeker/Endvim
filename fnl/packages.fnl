@@ -74,7 +74,7 @@
 ;; extra colorschemes
 (use-package! :EdenEast/nightfox.nvim)
 (use-package! :shaunsingh/nord.nvim)
-(use-package! :aktersnurra/no-color-fiesta.nvim)
+(use-package! :aktersnurra/no-clown-fiesta.nvim)
 
 ;; extra functionality
 (use-package! :karb94/neoscroll.nvim

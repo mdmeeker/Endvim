@@ -4,7 +4,7 @@
 ;; via require. This is the default:
 
 (set! background :dark)
-(colorscheme carbon)
+(colorscheme no-clown-fiesta)
 
 ;; The set! macro sets vim.opt options. By default it sets the option to true 
 ;; Appending `no` in front sets it to false. This determines the style of line 
@@ -100,3 +100,16 @@
 ;; Faster tabbing in and out
 (map! [n] "<" "<<")
 (map! [n] ">" ">>")
+
+;; The function keys
+(map! [n] "<F1>" "<cmd>ToggleTerm direction=float<CR>")
+(map! [n] "<F2>" "<cmd>NvimTreeToggle<CR>")
+(map! [n] "<F3>" "<cmd>ToggleTerm direction=vertical size=75<CR>")
+
+;; A mix of things...
+(map! [n] "<leader>y" "<cmd>Trouble workspace_diagnostics<CR>")
+(map! [n] "<leader>s" "<cmd>SymbolsOutline<CR>")
+
+;; Comment toggling
+(map! [n] "<leader>c" "<cmd>CommentToggle<CR>")
+(map! [x] "<leader>c" "<cmd>'<,'>CommentToggle<CR>")
