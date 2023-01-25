@@ -1,7 +1,5 @@
-(require :indent_blankline)
-(local {: setup} (require :indent_blankline))
-
-(setup {:buftype_exclude [:terminal]
+(setup :indent_blankline
+       {:buftype_exclude [:terminal]
         :filetype_exclude [:help
                            :terminal
                            :alpha

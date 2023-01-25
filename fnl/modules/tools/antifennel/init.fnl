@@ -1,3 +1,3 @@
-(import-macros {: use-package!} :macros)
+(import-macros {: nyoom-module!} :macros)
 
-(use-package! :beardedsakimonkey/nvim-antifennel {:cmd :Antifennel})
+(nyoom-module! tools.antifennel)

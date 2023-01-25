@@ -1,93 +1,28 @@
-(import-macros {: nyoom-module-p! : set! : augroup! : autocmd! : command! : warn!} :macros)
+(import-macros {: set! : augroup! : autocmd! : clear!} :macros)
 
-;; Restore cursor on exit
-(augroup! restore-cursor-on-exit
-          (autocmd! VimLeave * '(set! guicursor ["a:ver100-blinkon0"])))
+(fn bufexists? [...]
+  (= (vim.fn.bufexists ...) 1))
 
-;; Replace Packer usage
-(command! PackerSync '(warn! "Please use the bin/nyoom script instead of PackerSync"))
-(command! PackerInstall '(warn! "Please use the bin/nyoom script instead of PackerInstall"))
-(command! PackerUpdate '(warn! "Please use the bin/nyoom script instead of PackerUpdate"))
-(command! PackerCompile '(warn! "Please use the bin/nyoom script instead of PackerCompile"))
-(command! PackerStatus "lua require 'packages' require('packer').status()")
+(augroup! open-file-on-last-position (clear!)
+          (autocmd! BufReadPost *
+                    `(fn []
+                       (local mark (vim.api.nvim_buf_get_mark 0 "\""))
+                       (local lcount (vim.api.nvim_buf_line_count 0))
+                       (when (and (> (. mark 1) 0) (<= (. mark 1) lcount))
+                         (pcall vim.api.nvim_win_set_cursor 0 mark)))))
 
-;; improve updatetime for quicker refresh + gitsigns
-(set! updatetime 250)
-(set! timeoutlen 400)
+(augroup! read-file-on-disk-change (clear!)
+          (autocmd! [FocusGained BufEnter CursorHold CursorHoldI] *
+                    `(if (and (not= :c (vim.api.nvim_get_mode))
+                              (not (bufexists? "[Command Line]")))
+                         (vim.cmd.checktime)))
+          (autocmd! FileChangedShellPost *
+                    `(vim.notify "File changed on disk. Buffer reloaded."
+                                 vim.log.levels.INFO)))
 
-;; Set shortmess
-(set! shortmess+ :cI)
-
-;; Show whitespace characters
-(nyoom-module-p! nyoom
-  (do
-    (set! list)
-    (set! listchars {:trail "·"
-                     :tab "→ "
-                     :nbsp "·"})))
-
-;; Sign column
-(set! signcolumn "yes:1")
-
-;; Substitution
-(set! gdefault)
-
-;; By default no wrapping
-(set! nowrap)
-
-;; smart wrapping
-(nyoom-module-p! word-wrap
-  (do
-    (set! wrap)
-    (set! linebreak)
-    (set! breakindent)
-    (set! breakindentopt ["shift:2"])
-    (set! showbreak "↳ ")))
-
-;; Use clipboard outside Neovim
-(set! clipboard :unnamedplus)
-
-;; Enable mouse input
-(set! mouse :a)
-
-;; Disable swapfiles and enable undofiles
-(set! undofile)
-(set! noswapfile)
-
-;; Lazy redraw
-(set! lazyredraw)
-
-;; Smart search
-(set! smartcase)
-
-;; Indentation rules
-(set! copyindent)
-(set! smartindent)
-(set! preserveindent)
-
-;; Indentation level
-(set! tabstop 4)
-(set! shiftwidth 4)
-(set! softtabstop 4)
-
-;; Expand tabs
-(set! expandtab)
-
-;; Automatic split locations
-(set! splitright)
-(set! splitbelow)
-
-;; Scroll off
-(nyoom-module-p! nyoom
-  (set! scrolloff 4))
-
-;; Grep
-(set! grepprg "rg --vimgrep")
-(set! grepformat "%f:%l:%c:%m")
-
-;; colorscheme
-(nyoom-module-p! nyoom
- (do
-   (set! guifont "Liga SFMono Nerd Font:h15")
-   (set! background :dark)
-   (set! termguicolors)))
+(let [open_floating_preview vim.lsp.util.open_floating_preview]
+  (fn vim.lsp.util.open_floating_preview [...]
+    (local (bufnr winid) (open_floating_preview ...))
+    (vim.api.nvim_win_set_option winid :breakindentopt "")
+    (vim.api.nvim_win_set_option winid :showbreak "NONE")
+    (values bufnr winid)))
