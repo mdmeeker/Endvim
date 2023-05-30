@@ -16,12 +16,18 @@
     (nyoom-module-p! clojure
       (table.insert mason-tools :clojure-lsp))
 
+    (nyoom-module-p! csharp
+      (table.insert mason-tools :omnisharp))
+
     (nyoom-module-p! java
       (table.insert mason-tools :jdtls))
 
     (nyoom-module-p! julia
       (table.insert mason-tools :julia-lsp))
 
+    (nyoom-module-p! json
+      (table.insert mason-tools :json-lsp))
+    ;
     (nyoom-module-p! kotlin
       (table.insert mason-tools :kotlin-language-server))
 
@@ -48,6 +54,12 @@
 
     (nyoom-module-p! sh
       (table.insert mason-tools :bash-language-server))
+
+    (nyoom-module-p! xml
+      (table.insert mason-tools :lemminx))
+
+    (nyoom-module-p! yaml
+      (table.insert mason-tools :yaml-language-server))
 
     (nyoom-module-p! zig
       (table.insert mason-tools :zls))))

@@ -10,6 +10,12 @@
 (set vim.lsp.handlers.textDocument/hover
      (vim.lsp.with vim.lsp.handlers.hover {:border :solid}))
 
+
+(fn format! [bufnr ?async?]
+  (vim.lsp.buf.format {: bufnr
+                       :filter #(not (contains? [:jsonls :tsserver] $.name))
+                       :async ?async?}))
+
 (fn on-attach [client bufnr]
   (import-macros {: buf-map! : autocmd! : augroup! : clear!} :macros)
   (local {: contains?} (autoload :core.lib))
@@ -33,16 +39,10 @@
                      (buf-map! [n] :gr goto-references!)))
   ;; Enable lsp formatting if available 
   (nyoom-module-p! format.+onsave
-                   (when (client.supports_method :textDocument/formatting)
-                     (augroup! lsp-format-before-saving
-                               (clear! {:buffer bufnr})
-                               (autocmd! BufWritePre <buffer>
-                                         `(vim.lsp.buf.format {:filter (fn [client]
-                                                                         (not (contains? [:jsonls
-                                                                                          :tsserver]
-                                                                                         client.name)))
-                                                               : bufnr})
-                                         {:buffer bufnr})))))
+    (when (client.supports_method "textDocument/formatting")
+      (augroup! format-before-saving
+        (clear! {:buffer bufnr})
+        (autocmd! BufWritePre <buffer> #(format! bufnr) {:buffer bufnr})))))
 
 ;; What should the lsp be demanded of?
 
@@ -78,6 +78,10 @@
 
 ;; conditional servers
 
+(nyoom-module-p! cc (tset lsp-servers :clangd {:cmd [:clangd]}))
+
+(nyoom-module-p! csharp (tset lsp-servers :omnisharp {:cmd [:omnisharp]}))
+
 (nyoom-module-p! clojure (tset lsp-servers :clojure_lsp {}))
 
 (nyoom-module-p! java (tset lsp-servers :jdtls {}))
@@ -86,12 +90,26 @@
 
 (nyoom-module-p! julia (tset lsp-servers :julials {}))
 
+(nyoom-module-p! json 
+                 (tset lsp-servers :jsonls 
+       {:format {:enabled false}
+        :schemas [{:description "ESLint config"
+                   :fileMatch [:.eslintrc.json :.eslintrc]
+                   :url "http://json.schemastore.org/eslintrc"}
+                  {:description "Package config"
+                   :fileMatch [:package.json]
+                   :url "https://json.schemastore.org/package"}
+                  {:description "Packer config"
+                   :fileMatch [:packer.json]
+                   :url "https://json.schemastore.org/packer"}
+                   ]}))
+
 (nyoom-module-p! kotlin (tset lsp-servers :kotlin_langage_server {}))
 
 (nyoom-module-p! latex (tset lsp-servers :texlab {}))
 
 (nyoom-module-p! lua
-                 (tset lsp-servers :sumneko_lua
+                 (tset lsp-servers :lua_ls
                        {:settings {:Lua {:diagnostics {:globals [:vim]}
                                          :workspace {:library (vim.api.nvim_list_runtime_paths)
                                                      :maxPreload 100000}}}}))
@@ -108,6 +126,15 @@
                         :settings {:python {:analysis {:autoImportCompletions true
                                                        :useLibraryCodeForTypes true
                                                        :disableOrganizeImports false}}}}))
+
+(nyoom-module-p! yaml
+                 (tset lsp-servers :yamlls
+                       {:settings {:yaml {
+                        :schemaStore {:enable false 
+                                      :url "https://www.schemastore.org/api/json/catalog.json"}
+                        :schemas {:/path/to/your/custom/strict/schema.json "yet-another.{yml,yaml}"
+                                  "http://json.schemastore.org/prettierrc" ".prettierrc.{yml,yaml}"}
+                        :validate true}}}))
 
 (nyoom-module-p! zig (tset lsp-servers :zls {}))
 

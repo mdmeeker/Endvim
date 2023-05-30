@@ -8,13 +8,15 @@
                    (let [leap-ast (autoload :leap-ast)]
                      (map! [nxo] :gs `(leap-ast.leap) {:desc "Leap AST"}))))
 
-(local treesitter-filetypes [:help :fennel :vim :regex :query])
+(local treesitter-filetypes [:vimdoc :fennel :vim :regex :query])
 
 ;; conditionally install parsers
 
 (nyoom-module-p! clojure (table.insert treesitter-filetypes :clojure))
 
 (nyoom-module-p! common-lisp (table.insert treesitter-filetypes :commonlisp))
+
+(nyoom-module-p! csharp (table.insert treesitter-filetypes :c_sharp))
 
 (nyoom-module-p! java (table.insert treesitter-filetypes :java))
 
@@ -23,6 +25,8 @@
 (nyoom-module-p! kotlin (table.insert treesitter-filetypes :kotlin))
 
 (nyoom-module-p! latex (table.insert treesitter-filetypes :latex))
+
+; (nyoom-module-p! ledger (table.insert treesitter-filetypes :ledger))
 
 (nyoom-module-p! lua (table.insert treesitter-filetypes :lua))
 

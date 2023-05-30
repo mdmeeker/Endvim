@@ -34,13 +34,13 @@
 ;; packer can manage itself
 
 ;; (use-package! :EdenEast/packer.nvim {:opt true :branch :feat/lockfile})
-(use-package! :wbthomason/packer.nvim {:opt true :branch :feat/lockfile})
+(use-package! :wbthomason/packer.nvim {:opt true})
 
 ;; libraries
 
 (use-package! :nvim-lua/plenary.nvim {:module :plenary})
 (use-package! :MunifTanjim/nui.nvim {:module :nui})
-;; (use-package! :rktjmp/pact.nvim {:branch :new-clone-method})
+(use-package! :nyoom-engineering/oxocarbon.nvim)
 
 ;; include modules
 
@@ -71,47 +71,11 @@
 ;; Put your plugins here
 ;; ---------------------
 
-;; extra colorschemes
-(use-package! :EdenEast/nightfox.nvim)
-(use-package! :shaunsingh/nord.nvim)
-(use-package! :aktersnurra/no-clown-fiesta.nvim)
-
-
-;; Wakatime
-(use-package! :wakatime/vim-wakatime)
-
-;; extra functionality
-(use-package! :karb94/neoscroll.nvim
-              {:config (fn []
-                           ((. (require :neoscroll) :setup)
-                            {:hide_cursor true :stop_eof true :respect_scrolloff false :cursor_scrolls_alone true :easing_function "sine" :pre_hook nil :post_hook nil :performance_mode false})
-                           ((. (require :neoscroll.config) :set_mappings)
-                            {:<A-e> ["scroll" ["-vim.wo.scroll" "true" "350" "'sine'"]]
-                             :<A-d> ["scroll" ["vim.wo.scroll" "true" "350" "'sine'"]]
-                             :<A-r> ["scroll" ["-0.10" "false" "100" nil]]
-                             :<A-f> ["scroll" ["0.10" "false" "100" nil]]}))})
-(use-package! :terrortylor/nvim-comment
-              {:config (fn []
-                         ((. (require :nvim_comment) :setup)
-                          {:marker_padding true :comment_empty true :comment_empty_trim_whitespace true :create_mappings true :operator_mapping "<leader>g" :hook nil}))})
-
-(use-package! :akinsho/toggleterm.nvim
-              {:config (fn [] 
-                         ((. (require :toggleterm) :setup) 
-                          {:size 20 :open_mapping "<a-t>" :hide_numbers true :shade_filetypes [] :shade_terminals true :start_in_insert true :insert_mappings true :persist_size false :shell vim.o.shell :float_opts {:border :curved :width 130 :winblend 0 :highlights {:border "Normal" :background "Normal"}}}))})
-
-
-
-
-
-;; Send plugins to packer
-(echo! "Installing Packages")
-(unpack!)
-
 ;; Send plugins to packer
 
 (echo! "Installing Packages")
 (unpack!)
+
 ;; Compile modules 
 
 (echo! "Compiling Nyoom Modules")
