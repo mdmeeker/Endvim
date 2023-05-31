@@ -14,9 +14,9 @@
         dashboard            ; a nifty splash screen for neovim
         ;;nyoom-quit         ; WIP: buggy, terrible implementation of doom-quit. 
         hydra                ; Discount modality for mythological beast hunters
-        ;;indent-guides      ; highlighted indent columns
+        indent-guides      ; highlighted indent columns
         modeline             ; snazzy, nano-emacs-inspired modeline
-        ;;nvimtree           ; a project drawer, like NERDTree for vim
+        nvimtree           ; a project drawer, like NERDTree for vim
         neotree              ; tree-like structures for neovim
         ;;tabs               ; keep tabs on your buffers, literally
         vc-gutter            ; Get your diff out of the gutter
@@ -27,26 +27,21 @@
         :editor
         fold                 ; (nigh) universal code folding
         (format +onsave)     ; automated prettiness
-        ;;multiple-cursors   ; learn macros you dingus
         parinfer             ; turn lisp into python, sort of
         (hotpot +reflect)    ; lets get cooking. NOTE: essential module (for now), don't disable
         scratch              ; emacs-like scratch buffer functionality
         word-wrap            ; language-aware smart soft and hard wrapping
 
         :term
-        ;;fshell             ; WIP: the fennel shell that works everywhere
         toggleterm           ; persistant/floating terminal wrapper for :term
 
         :checkers
         diagnostics          ; tasing you for every semicolon you forget
         grammar              ; tasing grammar mistake every you make
-        ;;spell              ; tasing you for misspelling mispelling
 
         :tools
         debugger             ; stepping through code, to help you add bugs
         docker               ; row row row your boat TODO +netman?
-        ;;editorconfig       ; let someone else argue about tabs vs spaces
-        ;;magma              ; tame Jupyter notebooks
         mason                ; setting your tools in stone
         eval                 ; run code, run (also, repls)
         antifennel           ; for all the fennel haters out there. this ones for you
@@ -71,13 +66,11 @@
           +present
           +export
           +nabla)
-        ;;(org +pretty)      ; WIP: organize your plain life in plain text, the emacs way
         python               ; beautiful is better than ugly
         rust                 ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
         (sh +fish)           ; she sells {ba,z,fi}sh shells on the C xor
 
         :app
-        ;;calendar           ; Watch your missed deadlines in real time
 
         :config
         ;;literate           ; FIXME: Disguise your config as poor documentation
