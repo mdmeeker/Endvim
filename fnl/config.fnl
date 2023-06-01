@@ -11,7 +11,7 @@
 ;; numbers in effect. If set to nonumber, line numbers are disabled. For 
 ;; relative line numbers, set 'relativenumber`
 
-(set! nonumber)
+;; (set! nonumber)
 
 ;; The let option sets global, or `vim.g` options. 
 ;; Heres an example with localleader, setting it to <space>m
@@ -104,6 +104,7 @@
 (map! [n] "<F1>" "<cmd>ToggleTerm direction=float<CR>")
 (map! [n] "<F2>" "<cmd>NvimTreeToggle<CR>")
 (map! [n] "<F3>" "<cmd>ToggleTerm direction=vertical size=75<CR>")
+(map! [n] "<F4>" "<cmd>ToggleTerm direction=horizontal size=30<CR>")
 
 ;; A mix of things...
 (map! [n] "<leader>y" "<cmd>Trouble workspace_diagnostics<CR>")
