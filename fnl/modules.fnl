@@ -40,8 +40,6 @@
         grammar              ; tasing grammar mistake every you make
 
         :tools
-        debugger             ; stepping through code, to help you add bugs
-        docker               ; row row row your boat TODO +netman?
         mason                ; setting your tools in stone
         eval                 ; run code, run (also, repls)
         antifennel           ; for all the fennel haters out there. this ones for you
