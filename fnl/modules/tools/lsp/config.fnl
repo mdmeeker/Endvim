@@ -80,31 +80,7 @@
 
 (nyoom-module-p! cc (tset lsp-servers :clangd {:cmd [:clangd]}))
 
-(nyoom-module-p! csharp (tset lsp-servers :omnisharp {:cmd [:omnisharp]}))
-
-(nyoom-module-p! clojure (tset lsp-servers :clojure_lsp {}))
-
-(nyoom-module-p! java (tset lsp-servers :jdtls {}))
-
-(nyoom-module-p! sh (tset lsp-servers :bashls {}))
-
 (nyoom-module-p! julia (tset lsp-servers :julials {}))
-
-(nyoom-module-p! json 
-                 (tset lsp-servers :jsonls 
-       {:format {:enabled false}
-        :schemas [{:description "ESLint config"
-                   :fileMatch [:.eslintrc.json :.eslintrc]
-                   :url "http://json.schemastore.org/eslintrc"}
-                  {:description "Package config"
-                   :fileMatch [:package.json]
-                   :url "https://json.schemastore.org/package"}
-                  {:description "Packer config"
-                   :fileMatch [:packer.json]
-                   :url "https://json.schemastore.org/packer"}
-                   ]}))
-
-(nyoom-module-p! kotlin (tset lsp-servers :kotlin_langage_server {}))
 
 (nyoom-module-p! latex (tset lsp-servers :texlab {}))
 
@@ -116,27 +92,12 @@
 
 (nyoom-module-p! markdown (tset lsp-servers :marksman {}))
 
-(nyoom-module-p! nim (tset lsp-servers :nimls {}))
-
-(nyoom-module-p! nix (tset lsp-servers :rnix {}))
-
 (nyoom-module-p! python
                  (tset lsp-servers :pyright
                        {:root_dir (lsp.util.root_pattern [:.flake8])
                         :settings {:python {:analysis {:autoImportCompletions true
                                                        :useLibraryCodeForTypes true
                                                        :disableOrganizeImports false}}}}))
-
-(nyoom-module-p! yaml
-                 (tset lsp-servers :yamlls
-                       {:settings {:yaml {
-                        :schemaStore {:enable false 
-                                      :url "https://www.schemastore.org/api/json/catalog.json"}
-                        :schemas {:/path/to/your/custom/strict/schema.json "yet-another.{yml,yaml}"
-                                  "http://json.schemastore.org/prettierrc" ".prettierrc.{yml,yaml}"}
-                        :validate true}}}))
-
-(nyoom-module-p! zig (tset lsp-servers :zls {}))
 
 ;; Load lsp
 
