@@ -1,7 +1,8 @@
 -- Author: Matthew Meeker
 
 local modules = {
-
+  "core/plugins",
+  "core/settings"
 }
 
 
