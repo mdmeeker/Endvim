@@ -71,6 +71,27 @@
 ;; Put your plugins here
 ;; ---------------------
 
+(use-package! :EdenEast/nightfox.nvim)
+(use-package! :shaunsingh/nord.nvim)
+(use-package! :aktersnurra/no-clown-fiesta.nvim)
+
+;; extra functionality
+(use-package! :karb94/neoscroll.nvim
+              {:config (fn []
+                           ((. (require :neoscroll) :setup)
+                            {:hide_cursor true :stop_eof true :respect_scrolloff false :cursor_scrolls_alone true :easing_function "sine" :pre_hook nil :post_hook nil :performance_mode false})
+                           ((. (require :neoscroll.config) :set_mappings)
+                            {:<A-e> ["scroll" ["-vim.wo.scroll" "true" "350" "'sine'"]]
+                             :<A-d> ["scroll" ["vim.wo.scroll" "true" "350" "'sine'"]]
+                             :<A-r> ["scroll" ["-0.10" "false" "100" nil]]
+                             :<A-f> ["scroll" ["0.10" "false" "100" nil]]}))})
+(use-package! :terrortylor/nvim-comment
+              {:config (fn []
+                         ((. (require :nvim_comment) :setup)
+                          {:marker_padding true :comment_empty true :comment_empty_trim_whitespace true :create_mappings true :operator_mapping "<leader>g" :hook nil}))})
+
+
+
 ;; Send plugins to packer
 
 (echo! "Installing Packages")
