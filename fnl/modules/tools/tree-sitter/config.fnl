@@ -118,7 +118,7 @@
        {:ensure_installed treesitter-filetypes
         :highlight {:enable true :use_languagetree true}
         :indent {:enable true}
-        :context_commentstring {:enable true}
+        ;; :context_commentstring {:enable true}
         :refactor {:enable true
                    :keymaps {:smart_rename "<localleader>rn"}}
         :query_linter {:enable true
