@@ -1,11 +1,2 @@
-# neovim
-lua/
-profile.json
+plugin/packer_compiled.lua
 
-# cli
-result/
-target/
-packages.json
-
-# macOS
-.DS_Store
