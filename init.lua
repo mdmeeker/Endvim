@@ -13,8 +13,15 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Base keymaps, not dependent on plugins. Creates safer start in case one of the later require's fails.
+require("base_keymaps")
 
--- LAZY req
+-- Now, include settings and configurations
+require("settings")
 
-require("lazy").setup(plugins, opts)
+-- Lazy.nvim
+require("lazy").setup("plugin_install")
+
+
+
 

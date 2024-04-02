@@ -1,0 +1,4 @@
+{
+  "lazy.nvim": { "branch": "main", "commit": "65887ea871d44822bff47504202b3643f29d614e" },
+  "no-clown-fiesta.nvim": { "branch": "master", "commit": "0cf858e14aa98218c4aec92011bded80e935549b" }
+}
