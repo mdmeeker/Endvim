@@ -58,7 +58,7 @@ vim.cmd [[set t_Co=256]]
 
 set.hidden = true
 set.timeoutlen = 500
-set.lazyredraw = true
+set.lazyredraw = false
 set.synmaxcol = 240
 set.updatetime = 700
 
