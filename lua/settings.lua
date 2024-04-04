@@ -34,7 +34,6 @@ set.ruler = true
 set.splitbelow = true
 set.splitright = true
 set.conceallevel = 1
-set.tabstop = 2
 set.number = true
 set.relativenumber = true
 set.background = "dark"
@@ -44,7 +43,18 @@ set.termguicolors = true
 set.laststatus= 3
 set.title = true
 set.cursorline = true
+
+-- Sets tabs to look/be 2 spaces, autocmd for Python whitespace adherence
 set.shiftwidth = 2
+set.tabstop = 2
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "py",
+	callback = function()
+		vim.opt_local.shiftwidth = 4
+		vim.opt_local.tabstop = 4
+	end
+})
+
 set.showtabline = 1
 set.cmdheight = 1
 set.numberwidth = 5
