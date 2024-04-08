@@ -12,7 +12,6 @@ local core_modules = {
     "configs/colorizer",
   
     -- Plugin Configurations
-    "configs/impatient",
     "configs/alpha-nvim",
     "configs/nvim-tree",
     "configs/treesitter",
@@ -22,7 +21,6 @@ local core_modules = {
     "configs/LSP_configs/trouble",
   
     -- functionalities
-    "configs/gitsigns",
     "configs/commentary",
     "configs/smooth-scrl",
     "configs/toggleterm",
