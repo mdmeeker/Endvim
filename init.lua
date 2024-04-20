@@ -13,15 +13,15 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local core_modules = {
+require("core/options")
+require("core/keymaps")
+require("core/plugins")
+require("core/colorscheme")
 
-    -- Core Settings
-    "core/plugins",
-    "core/keymaps",
-    "core/options",
-  
+
+
+local core_modules = {
     -- visual
-    "configs/colorscheme",
     "configs/colorizer",
   
     -- Plugin Configurations
