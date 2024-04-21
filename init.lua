@@ -21,9 +21,6 @@ require("core/colorscheme")
 
 
 local core_modules = {
-    -- visual
-    "configs/colorizer",
-  
     -- Plugin Configurations
     "configs/alpha-nvim",
     "configs/nvim-tree",
@@ -31,7 +28,6 @@ local core_modules = {
   
     "configs/LSP_configs/completion",
     "configs/LSP_configs/aerial",
-    "configs/LSP_configs/trouble",
   
     -- functionalities
     "configs/commentary",
@@ -40,8 +36,7 @@ local core_modules = {
     "configs/lualine",
     "configs/incline",
     "configs/telescope",
-  
-  }
+}
   
   for _, module in ipairs(core_modules) do
       local ok, err = pcall(require, module)

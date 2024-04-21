@@ -1,46 +1,6 @@
 -- Author: Matthew Meeker
 
 
-local fn = vim.fn
-
--- If packer is not found in the path described below, installs and asks the user
--- to restart nvim
-local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-  PACKER_BOOTSTRAP = fn.system {
-    "git",
-    "clone",
-    "--depth",
-    "1",
-    "https://github.com/wbthomason/packer.nvim",
-    install_path,
-  }
-  print "Installing packer close and reopen Neovim..."
-  vim.cmd [[packadd packer.nvim]]
-end
-
-vim.cmd [[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync
-  augroup end
-]]
-
--- pcall on Packer and initialization
-local status_ok, packer = pcall(require, "packer")
-if not status_ok then
-  return
-end
-
-packer.init {
-  display = {
-    open_fn = function()
-      return require("packer.util").float { border = "rounded" }
-    end,
-  },
-}
-
-
 -- These define bits s.t. commands upon which to load plugins
 local treesitter_cmds = {
   "TSInstall",
@@ -61,127 +21,103 @@ local mason_cmds = {
 }
 
 
--- Finally, call Packer with the following packages
-return packer.startup(function(use)
+require("lazy").setup({
+  --- Colorschemes
+  "shaunsingh/nord.nvim",
+  "sainnhe/everforest",
+  "morhetz/gruvbox",
+  "folke/tokyonight.nvim",
+  "aktersnurra/no-clown-fiesta.nvim",
 
   -- Core
-  use "wbthomason/packer.nvim"
-  use {
-    "nvim-lua/plenary.nvim",
-    module = "plenary"
-  }
 
-  -- Aesthetics
-  use "norcalli/nvim-colorizer.lua"
-  use {
+
+  "norcalli/nvim-colorizer.lua",
+  {
     "kyazdani42/nvim-web-devicons",
     module = "nvim-web-devicons"
-  }
-  --- Colorschemes
-  use "shaunsingh/nord.nvim"
-  use "sainnhe/everforest"
-  use "morhetz/gruvbox"
-  use "folke/tokyonight.nvim"
-  use "aktersnurra/no-clown-fiesta.nvim"
+  },
 
-  use "lukas-reineke/indent-blankline.nvim"
+  {
+    "nvim-lualine/lualine.nvim",
+    opts = function(_, opts)
+      table.insert(opts.sections.lualine_x, {
+        function()
+          return require("util.dashboard").status()
+        end,
+      })
 
-  -- Mappings
-  use {
-    "anuvyklack/hydra.nvim",
-    keys = "<space>",
-    -- config = load file
-  }
-  use { -- Autopairs e.g. {}, [], (), "", ''
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    config = function()
-      require "configs/autopairs"
-    end
-  }
-  use { -- Faster un/commenting for lines
-    "terrortylor/nvim-comment"
-  }
-  use "karb94/neoscroll.nvim"
-
-
-  -- File Navigation
-  -- nvim tree
-  use {
-    "kyazdani42/nvim-tree.lua",
-    cmd = "NvimTreeToggle",
-    config = function()
-      -- require the nvim tree setup file
-    end
-  }
-  -- telescope: telescope-project, telescope-ui-select, telescope-fzfnative
-  
-  -- Treesitter
-  use { -- Treesitter and related subpackages
-    "nvim-treesitter/nvim-treesitter",
-    run = ":TSUpdate",
-    cmd = treesitter_cmds,
-    module = "nvim-treesitter",
-    config = function()
-      -- 
+      local error_color = LazyVim.ui.fg("DiagnosticError")
+      local ok_color = LazyVim.ui.fg("DiagnosticInfo")
     end,
-    setup = function()
+  },
 
-    end,
-    requires = {
-      {"nvim-treesitter/playground", cmd = "TSPlayground"},
-      {"p00f/nvim-ts-rainbow", after = "nvim-treesitter"},
-      {"nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter"}
-    }
-  }
-  
+
+
+
+
+  -- Telescope
+
+
+
+
   -- LSP
-  use { -- Mason package manager
+  {
     "williamboman/mason.nvim",
-    cmd = mason_cmds,
-    config = function()
-      require "configs/mason"
-    end
-  }
-  use {
-    "j-hui/fidget.nvim",
-    after = "nvim-lspconfig",
-    -- config = call setup
-  }
-  use {
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    after = "nvim-lspconfig",
-    -- config = call setup for lsp_lines
-  }
-  use {
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, {
+        "asm_lsp",
+        "clangd",
+        "cmake",
+        "gopls"
+        "hls",
+        "julials",
+        "marksman",
+        "ocamllsp",
+        "pyright",
+        "rust_analyzer",
+        "solang",
+        "solc",
+        "sumneko_lua",
+        "texlab",
+      })
+    end,
+  },
+  "williamboman/mason-lspconfig.nvim",
+
+  -- lsp servers
+  {
     "neovim/nvim-lspconfig",
-    opt = true,
-    setup = function()
-      -- TODO -- lazy loading things
-    end,
-    config = function()
-      require("configs/lsp")
-    end
-
-  }
+    opts = {
+      inlay_hints = { enabled = true },
+      capabilities = {
+        workspace = {
+          didChangeWatchedFiles = {
+            dynamicRegistration = false,
+          },
+        },
+      },
+      ---@type lspconfig.options
+      servers = {
+        asm_lsp = {},
+        bashls = {},
+        clangd = {},
+        -- ruff_lsp = {},
+        marksman = {},
+        yamlls = {
+          settings = {
+            yaml = {
+              keyOrdering = false,
+            },
+          },
+        },
+      },
+      setup = {},
+    },
+  },
   
 
-  -- Git
-  use { -- Neogit
-    "TimUntersberger/neogit",
-    config = function()
-      -- TODO -- Call setup
-    end,
-  }
-  use { -- Gitsigns
-    "lewis6991/gitsigns.nvim",
-    ft = "gitcommit",
-    -- config = call setup
-    -- setup = lazy loading things
-  }
-  
-  -- Completion
-  use { -- nvim-cmp so nice!
+  { -- nvim-cmp so nice!
     "hrsh7th/nvim-cmp",
     -- config = load file cmp
     wants = "LuaSnip",
@@ -201,34 +137,25 @@ return packer.startup(function(use)
         }
       },
     }
-  }
+  },
 
-  -- More aesthetic items
-  use { -- Zen mode for writing
-    "Pocco81/true-zen.nvim",
-    cmd = "TZAtaraxis",
-    -- config = load file
-  }
-  use { -- Match parentheses
-    "monkoose/matchparen.nvim",
-    opt = true,
-    -- config = load file
-    -- TODO for setup -> lazyload things
-  }
-  use { "b0o/incline.nvim" }
+  -- Niceties
+  { -- Faster un/commenting for lines
+    "terrortylor/nvim-comment"
+  },
+  "karb94/neoscroll.nvim",
+  "folke/twilight.nvim",
+  {
+    "folke/zen-mode.nvim",
+    cmd = "ZenMode",
+    opts = {
+      plugins = {
+        gitsigns = true,
+        tmux = true,
+        kitty = { enabled = false, font = "+2" },
+      },
+    },
+    keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
+  },
 
-
-  -- Orgmode
-  use { -- Neorg
-    "nvim-neorg/neorg",
-    config = function()
-      require("configs/neorg")
-    end,
-    ft = "neorg",
-    after = "nvim-treesitter"
-  }
-
-  if PACKER_BOOTSTRAP then
-    require("packer").sync()
-  end
-end)
+})
