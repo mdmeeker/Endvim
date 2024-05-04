@@ -22,25 +22,37 @@ require("core/colorscheme")
 
 local core_modules = {
     -- Plugin Configurations
-    "configs/alpha-nvim",
-    "configs/nvim-tree",
+    "configs/lualine",
+
     "configs/treesitter",
+
+    "configs/mason",
+
+    "configs/neoscroll",
+
+    "configs/alpha-nvim",
+
+    "configs/toggleterm",
+
+    "configs/comment"
+    -- "configs/nvim-tree",
   
-    "configs/LSP_configs/completion",
-    "configs/LSP_configs/aerial",
+    -- "configs/LSP_configs/completion",
+    -- "configs/LSP_configs/aerial",
   
     -- functionalities
-    "configs/commentary",
-    "configs/smooth-scrl",
-    "configs/toggleterm",
-    "configs/lualine",
-    "configs/incline",
-    "configs/telescope",
+    -- "configs/commentary",
+    -- "configs/incline",
+    -- "configs/telescope",
 }
   
+
+  
   for _, module in ipairs(core_modules) do
-      local ok, err = pcall(require, module)
-      if not ok then
-        return err
-      end
+  --    local ok, err = pcall(require, module)
+  --     if not ok then
+  --       return err
+  --     end
+
+    require(module)
   end

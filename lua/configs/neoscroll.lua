@@ -18,14 +18,10 @@ require('neoscroll').setup({
 local t = {}
 -- Syntax: t[keys] = {function, {function arguments}}
 -- Use the "sine" easing function
-t['<A-e>'] = {'scroll', {'-vim.wo.scroll', 'true', '350', [['sine']]}}
-t['<A-d>'] = {'scroll', { 'vim.wo.scroll', 'true', '350', [['sine']]}}
+t['<C-e>'] = {'scroll', {'-vim.wo.scroll', 'true', '450', [['sine']]}}
+t['<C-d>'] = {'scroll', {'vim.wo.scroll', 'true', '450', [['sine']]}}
 -- Pass "nil" to disable the easing animation (constant scrolling speed)
-t['<A-r>'] = {'scroll', {'-0.10', 'false', '100', nil}}
-t['<A-f>'] = {'scroll', { '0.10', 'false', '100', nil}}
--- When no easing function is provided the default easing function (in this case "quadratic") will be used
-t['zt']    = {'zt', {'300'}}
-t['zz']    = {'zz', {'300'}}
-t['zb']    = {'zb', {'300'}}
+t['<C-r>'] = {'scroll', {'-0.10', 'false', '-100', nil}}
+t['<C-f>'] = {'scroll', { '0.10', 'false', '100', nil}}
 
 require('neoscroll.config').set_mappings(t)

@@ -26,18 +26,12 @@ keymap ("n", "<A-w>", ":w<CR>", {})
 keymap ("n", "<A-q>", ":q<CR>", {})
 keymap ("n", "<A-1>", ":q!<CR>",{})
 
-keymap ("n", "<leader>c", ":CommentToggle<CR>", {})
-keymap ("x", "<leader>c", ":'<,'>CommentToggle<CR>", {})
-keymap ("n", "<leader>p", "vip:CommentToggle<CR>", {})
-
 keymap ("n", "<", "<<", {})
 keymap ("n", ">", ">>", {})
 
 keymap ("n", "Q", "q", {})
 keymap ("n", "q", "<nop>", {})
 
-keymap ("n", "<leader>h", ":Gitsigns preview_hunk<CR>", {})
-keymap ("n", "<leader>r", ":Gitsigns reset_buffer<CR>", {})
 keymap ("n", "yie", ":<C-u>%y<CR>", {})
 
 -- Extra functionalities
@@ -45,10 +39,10 @@ keymap ("n", "<F1>", ":ToggleTerm<CR>", {})
 keymap ("n", "<F2>", ":NvimTreeToggle<CR>", {})
 keymap ("n", "<F3>", ":vnew term://zsh<CR>", {})
 
--- LSP things
--- -- Trouble.nvim
-keymap ("n", "<leader>y", ":Trouble workspace_diagnostics<CR>", {})
-keymap ("n", "<leader>s", ":SymbolsOutline<CR>", {})
+keymap ("n", "<leader>c", "gcc", {})
+keymap ("x", "<leader>c", "gcc", {})
+keymap ("n", "<leader>b", "gbc", {})
+
 
 -----------------
 -- Insert Mode --

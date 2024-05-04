@@ -1,6 +1,3 @@
--- Author: Matthew Meeker
-
-
 -- cmp status call
 local cmp_status_ok, cmp = pcall(require, "cmp")
 if not cmp_status_ok then
@@ -17,14 +14,6 @@ local lsp_status_ok, lspc = pcall(require, "lspconfig")
 if not lsp_status_ok then
   return
 end
--- lsp installer
-local lspi_status_ok, lspi = pcall(require, "nvim-lsp-installer")
-if not lspi_status_ok then
-  return
-end
--- cmp autopairs
-local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({ map_char = {tex = ''} }) )
 
 lspi.setup { automatic_installation = true }
 
@@ -33,34 +22,35 @@ local check_backspace = function()
   return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
 end
 --   פּ ﯟ   some other icons
-local kind_icons = {
-    Text = "",
-    Method = "",
-    Function = "",
-    Constructor = "",
-    Field = "ﰠ",
-    Variable = "",
-    Class = "ﴯ",
-    Interface = "",
-    Module = "",
-    Property = "ﰠ",
-    Unit = "塞",
-    Value = "",
-    Enum = "",
-    Keyword = "",
-    Snippet = "",
-    Color = "",
-    File = "",
-    Reference = "",
-    Folder = "",
-    EnumMember = "",
-    Constant = "",
-    Struct = "פּ",
-    Event = "",
-    Operator = "",
-    TypeParameter = "T"
-}
 
+-- TODO: Fix these
+-- local kind_icons = {
+--     Text = "",
+--     Method = "",
+--     Function = "",
+--     Constructor = "",
+--     Field = "ﰠ",
+--     Variable = "",
+--     Class = "ﴯ",
+--     Interface = "",
+--     Module = "",
+--     Property = "ﰠ",
+--     Unit = "塞",
+--     Value = "",
+--     Enum = "",
+--     Keyword = "",
+--     Snippet = "",
+--     Color = "",
+--     File = "",
+--     Reference = "",
+--     Folder = "",
+--     EnumMember = "",
+--     Constant = "",
+--     Struct = "פּ",
+--     Event = "",
+--     Operator = "",
+--     TypeParameter = "T"
+-- }
 
 cmp.setup({
   snippet = {
