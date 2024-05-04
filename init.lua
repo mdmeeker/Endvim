@@ -34,16 +34,14 @@ local core_modules = {
 
     "configs/toggleterm",
 
-    "configs/comment"
-    -- "configs/nvim-tree",
+    "configs/nvimtree",
+
+    "configs/comment",
+
   
     -- "configs/LSP_configs/completion",
     -- "configs/LSP_configs/aerial",
   
-    -- functionalities
-    -- "configs/commentary",
-    -- "configs/incline",
-    -- "configs/telescope",
 }
   
 

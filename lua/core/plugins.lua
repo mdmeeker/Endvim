@@ -48,6 +48,8 @@ require("lazy").setup({
     lazy = false,
   },
 
+  "nvim-tree/nvim-tree.lua",
+
   -- Telescope
 
 
