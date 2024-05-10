@@ -22,7 +22,7 @@ require("core/colorscheme")
 
 local core_modules = {
     -- Plugin Configurations
-    "configs/lualine",
+    "configs/status_line",
 
     "configs/treesitter",
 

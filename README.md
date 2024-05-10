@@ -1,4 +1,4 @@
-# mjachi's nvim after however many iterations
+# My nvim after however many iterations
 
 ## Feature checklist
 

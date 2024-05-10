@@ -34,6 +34,14 @@ require("lazy").setup({
     "nvim-lualine/lualine.nvim",
     dependencies = { "kyazdani42/nvim-web-devicons" }
   },
+  {
+    "b0o/incline.nvim",
+    config = function()
+      require('incline').setup()
+    end,
+  },
+
+
   "nvim-treesitter/nvim-treesitter",
   
   -- Nice scrolling
@@ -51,6 +59,13 @@ require("lazy").setup({
   "nvim-tree/nvim-tree.lua",
 
   -- Telescope
+
+
+  -- Completions 
+  "neovim/nvim-lspconfig",
+  "hrsh7th/nvim-cmp",
+  "hrsh7th/cmp-nvim-lsp",
+
 
 
   -- MASON
