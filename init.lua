@@ -38,9 +38,7 @@ local core_modules = {
 
     "configs/comment",
 
-  
-    -- "configs/LSP_configs/completion",
-    -- "configs/LSP_configs/aerial",
+    "configs/completion",
   
 }
   
