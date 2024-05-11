@@ -1,12 +1,4 @@
-local servers = {
-  "texlab",
-  "clangd",
-  "pyright",
-  "julials",
-  "cmake",
-  "lua_ls",
-  "typos_lsp",
-}
+
 
 -- Mason configuration
 require("mason").setup()
@@ -15,7 +7,11 @@ require("mason").setup()
 local cmp = require("cmp")
 cmp.setup({
 
-  snippet = {},
+  snippet = {
+    expand = function(args)
+      require("luasnip").lsp_expand(args.body)
+    end
+  },
 
   window = {},
 
@@ -30,7 +26,7 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     -- { name = 'vsnip' }, -- For vsnip users.
-    -- { name = 'luasnip' }, -- For luasnip users.
+    { name = 'luasnip' }, -- For luasnip users.
     -- { name = 'ultisnips' }, -- For ultisnips users.
     -- { name = 'snippy' }, -- For snippy users.
   }, {
@@ -71,14 +67,33 @@ cmp.setup.cmdline(':', {
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
 
-
+local servers = {
+  "texlab",
+  "clangd",
+  "pyright",
+  "julials",
+  "cmake",
+  "lua_ls",
+  "typos_lsp",
+}
 require("mason-lspconfig").setup( {
   ensure_installed = servers,
 })
 
 
-require('lspconfig').pyright.setup {
+local lspc = require("lspconfig")
+lspc.pyright.setup {
   capabilities = capabilities
 }
-
-
+lspc.clangd.setup {
+  capabilities = capabilities
+}
+lspc.julials.setup {
+  capabilities = capabilities
+}
+lspc.cmake.setup {
+  capabilities = capabilities
+}
+lspc.typos_lsp.setup {
+  capabilities = capabilities
+}

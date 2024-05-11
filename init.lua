@@ -22,6 +22,7 @@ require("core/colorscheme")
 
 local core_modules = {
     -- Plugin Configurations
+    "configs/completion",
     "configs/status_line",
 
     "configs/treesitter",
@@ -38,7 +39,6 @@ local core_modules = {
 
     "configs/comment",
 
-    "configs/completion",
   
 }
   
