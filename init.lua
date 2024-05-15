@@ -39,6 +39,7 @@ local core_modules = {
 
     "configs/comment",
 
+    "configs/vimtex"
   
 }
   

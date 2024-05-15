@@ -14,7 +14,7 @@ require("no-clown-fiesta").setup({
   },
 })
 
-local status_ok, _ = pcall(vim.cmd, "colorscheme oxocarbon")
+local status_ok, _ = pcall(vim.cmd, "colorscheme no-clown-fiesta")
 if not status_ok then
   return
 end

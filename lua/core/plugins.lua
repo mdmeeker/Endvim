@@ -74,20 +74,27 @@ require("lazy").setup({
   "L3MON4D3/LuaSnip",
   "saadparwaiz1/cmp_luasnip",
 
-  -- Completion
 
-  -- Niceties
-  -- "folke/twilight.nvim",
-  -- {
-  --   "folke/zen-mode.nvim",
-  --   cmd = "ZenMode",
-  --   opts = {
-  --     plugins = {
-  --       gitsigns = true,
-  --       kitty = { enabled = false, font = "+2" },
-  --     },
-  --   },
-  --   keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
-  -- },
+  {
+    "lervag/vimtex",
+    lazy = false,     -- we don't want to lazy load VimTeX
+    -- tag = "v2.15", -- uncomment to pin to a specific release
+    -- init = function()
+      -- VimTeX configuration goes here
+    -- end
+  },
+
+  "folke/twilight.nvim",
+  {
+    "folke/zen-mode.nvim",
+    cmd = "ZenMode",
+    opts = {
+      plugins = {
+        gitsigns = true,
+        kitty = { enabled = false, font = "+2" },
+      },
+    },
+    keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
+  },
 
 })
