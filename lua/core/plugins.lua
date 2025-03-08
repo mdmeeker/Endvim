@@ -23,6 +23,19 @@ require("lazy").setup({
   "aktersnurra/no-clown-fiesta.nvim",
   "nyoom-engineering/oxocarbon.nvim",
   "sainnhe/sonokai",
+  {
+    "neanias/everforest-nvim",
+    version = false,
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("everforest").setup({
+        background = "medium",
+        ui_contrast = "high",
+
+      })
+    end,
+  },
 
   -- Core
   "norcalli/nvim-colorizer.lua",
@@ -43,7 +56,7 @@ require("lazy").setup({
 
 
   "nvim-treesitter/nvim-treesitter",
-  
+
   -- Nice scrolling
   "karb94/neoscroll.nvim",
   -- Dashboard
@@ -61,7 +74,7 @@ require("lazy").setup({
   -- Telescope
 
 
-  -- Completions 
+  -- Completions
   "williamboman/mason.nvim",
   "neovim/nvim-lspconfig",
   "williamboman/mason-lspconfig.nvim",
@@ -79,9 +92,23 @@ require("lazy").setup({
     "lervag/vimtex",
     lazy = false,     -- we don't want to lazy load VimTeX
     -- tag = "v2.15", -- uncomment to pin to a specific release
-    -- init = function()
+    init = function()
       -- VimTeX configuration goes here
-    -- end
+      vim.g.tex_flavor = "latex"
+      vim.g.vimtex_view_method = "skim"
+      vim.g.vimtex_view_skim_sync = 1
+      vim.g.vimtex_view_skim_activate = 1
+      -- vim.g.vimtex_compiler_method = 'xelatex'
+      vim.g.vimtex_indent_enabled = 0
+      vim.g.vimtex_imaps_enabled = 0
+      vim.g.vimtex_mappings_enabled = 0
+      vim.g.vimtex_view_automatic = 1
+
+      vim.g.vimtex_complete_enabled = 1
+      vim.g.vimtex_syntax_enabled = 1
+
+
+    end
   },
 
   "folke/twilight.nvim",
@@ -96,5 +123,8 @@ require("lazy").setup({
     },
     keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
   },
+
+
+  -- Neorg
 
 })

@@ -13,6 +13,11 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+
+-- NOTE: must be loaded before
+--       VimTex itself apparently
+require("configs/vimtex")
+
 require("core/options")
 require("core/keymaps")
 require("core/plugins")
@@ -39,7 +44,7 @@ local core_modules = {
 
     "configs/comment",
 
-    "configs/vimtex"
+    "utils/vstuff"
   
 }
   
