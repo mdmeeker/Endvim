@@ -44,4 +44,10 @@ keymap.set("t", "<A-1>", "<C-\\><C-n>:ToggleTerm<CR>", opts)
 -- Force attach Ruff LSP for debugging
 keymap.set("n", "<leader>lr", function() _G.force_attach_ruff() end, { desc = "Force attach Ruff LSP" })
 
+-- Window movement keymaps
+keymap.set('n', '<C-S-h>', '<cmd>wincmd H<cr>', { desc = 'Move window left' })
+keymap.set('n', '<C-S-j>', '<cmd>wincmd J<cr>', { desc = 'Move window down' })
+keymap.set('n', '<C-S-k>', '<cmd>wincmd K<cr>', { desc = 'Move window up' })
+keymap.set('n', '<C-S-l>', '<cmd>wincmd L<cr>', { desc = 'Move window right' })
+
 -- Add any other keymaps you want here
