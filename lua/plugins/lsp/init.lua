@@ -2,50 +2,76 @@ require("mason").setup()
 require("mason-lspconfig").setup({
   ensure_installed = {
     "ruff",          -- Python
+    -- "pyright",       -- Python type checking
     "clangd",        -- C/C++
-    "julia_lsp",     -- Julia
+    "julials",       -- Julia
     "rust_analyzer", -- Rust
-    "ocamllsp",      -- OCaml
-    "hls",           -- Haskell
     "asm_lsp",       -- Assembly
     -- TODO: add markdown, restructured text, zig?
   }
 })
 
 local lspconfig = require('lspconfig')
+-- Set up nvim-cmp capabilities
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- Ruff configuration
-lspconfig.ruff.setup({
-  settings = {
-    -- Ruff settings
-    ruff = {
-      -- Enable Ruff's formatter
-      format = {
-        enabled = true,
-      },
-      -- Enable Ruff's linter
-      lint = {
-        enabled = true,
-      },
-      -- Configure rules, severity, etc.
-      rules = {
-        -- Add any specific rules you want to enable/configure
-      },
-    }
-  },
-  on_attach = function(client, bufnr)
-    -- Enable formatting
-    client.server_capabilities.documentFormattingProvider = true
-    
-    -- Set up buffer-local keymaps, etc.
-    local opts = { buffer = bufnr }
-    vim.keymap.set('n', '<space>f', function()
-      vim.lsp.buf.format({ async = true })
-    end, opts)
-  end,
+-- Enable diagnostics
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
 })
 
--- Global mappings for LSP
+-- Add borders to hover windows
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+  vim.lsp.handlers.hover, {
+    border = "rounded",
+  }
+)
+
+-- Configure Ruff LSP
+lspconfig.ruff.setup({
+  capabilities = capabilities,
+  init_options = {
+    settings = {
+      -- Any extra CLI arguments for `ruff` go here.
+      args = {},
+    }
+  }
+})
+
+-- Disable hover in favor of another LSP if needed
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client == nil then
+      return
+    end
+    if client.name == 'ruff' then
+      -- Disable hover in favor of another Python LSP if you add one later
+      client.server_capabilities.hoverProvider = false
+    end
+  end,
+  desc = 'LSP: Disable hover capability from Ruff',
+})
+
+-- lspconfig.pyright.setup({
+--   capabilities = capabilities,
+--   settings = {
+--     python = {
+--       analysis = {
+--         typeCheckingMode = "basic",
+--         autoSearchPaths = true,
+--         useLibraryCodeForTypes = true,
+--       },
+--     },
+--   },
+-- })
+
+-- Global mappings.
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
@@ -56,10 +82,6 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
-    -- Buffer local mappings.
     local opts = { buffer = ev.buf }
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)

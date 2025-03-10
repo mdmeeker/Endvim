@@ -7,6 +7,12 @@ require("toggleterm").setup({
   float_opts = {
     border = 'curved',
     winblend = 3,
+    width = function()
+      return math.floor(vim.o.columns * 0.67) -- Reduce width to 2/3 of screen
+    end,
+    height = function()
+      return math.floor(vim.o.lines * 0.67) -- Reduce height to 2/3 of screen
+    end,
   },
   -- Enable normal mode in terminal
   on_open = function(term)

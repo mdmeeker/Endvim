@@ -11,6 +11,8 @@ vim.api.nvim_create_autocmd("User", {
   callback = function()
     -- Plugin configurations
     require('plugins.nvim-tree')
+    require('plugins.lsp')        -- Load LSP first
+    require('plugins.completion') -- Then load completion
   end,
 })
 
