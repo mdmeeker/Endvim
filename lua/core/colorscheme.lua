@@ -1,20 +1,19 @@
--- Author: Matthew Meeker
+-- Colorscheme configuration
 
-require("no-clown-fiesta").setup({
-  transparent = false, -- Enable this to disable the bg color
-  styles = {
-    -- You can set any of the style values specified for `:h nvim_set_hl`
-    comments = { italic = true },
-    functions = { bold = true },
-    keywords = {},
-    lsp = { underline = true },
-    match_paren = {},
-    type = { bold = true },
-    variables = {},
-  },
-})
+local colorscheme = "everforest"
 
-local status_ok, _ = pcall(vim.cmd, "colorscheme no-clown-fiesta")
-if not status_ok then
+----- CONFIGURES sainnhe/everforest
+-- vim.g.everforest_background = 'dark'
+-- vim.g.everforest_better_performance = 1
+-- vim.g.everforest_enable_italic = 1
+-- vim.g.everforest_diagnostic_text_highlight = 1
+-- vim.g.everforest_diagnostic_line_highlight = 1
+-- vim.g.everforest_diagnostic_virtual_text = 'colored'
+
+local status, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
+
+if not status then
+  vim.notify("Colorscheme " .. colorscheme .. " not found!")
+  vim.cmd("colorscheme habamax")
   return
-end
+end 

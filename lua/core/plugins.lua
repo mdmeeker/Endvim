@@ -1,130 +1,96 @@
-local treesitter_cmds = {
-  "TSInstall",
-  "TSBufEnable",
-  "TSBufDisable",
-  "TSEnable",
-  "TSDisable",
-  "TSModuleInfo",
-}
-
-local mason_cmds = {
-  "Mason",
-  "MasonInstall",
-  "MasonInstallAll",
-  "MasonUninstall",
-  "MasonUninstallAll",
-  "MasonLog",
-}
-
+-- Plugin management with lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  --- Colorschemes
-  "shaunsingh/nord.nvim",
-  "aktersnurra/no-clown-fiesta.nvim",
-  "nyoom-engineering/oxocarbon.nvim",
-  "sainnhe/sonokai",
-  {
+  -- Colorscheme
+  -- FOR VIM: { "sainnhe/everforest" },
+  { 
     "neanias/everforest-nvim",
     version = false,
-    lazy = false,
     priority = 1000,
     config = function()
       require("everforest").setup({
-        background = "medium",
+        background = "dark",
         ui_contrast = "high",
-
+        disable_italic_comments = false,
+        dim_inactive_windows = true,
+        float_style = "bright",
       })
-    end,
-  },
-
-  -- Core
-  "norcalli/nvim-colorizer.lua",
-  {
-    "kyazdani42/nvim-web-devicons",
-    module = "nvim-web-devicons"
-  },
-  {
-    "nvim-lualine/lualine.nvim",
-    dependencies = { "kyazdani42/nvim-web-devicons" }
-  },
-  {
-    "b0o/incline.nvim",
-    config = function()
-      require('incline').setup()
-    end,
-  },
-
-
-  "nvim-treesitter/nvim-treesitter",
-
-  -- Nice scrolling
-  "karb94/neoscroll.nvim",
-  -- Dashboard
-  "goolord/alpha-nvim",
-  -- Terminal emulator splits
-  {'akinsho/toggleterm.nvim', version = "*", config = true},
-  -- Commenting
-  {
-    'numToStr/Comment.nvim',
-    lazy = false,
-  },
-
-  "nvim-tree/nvim-tree.lua",
-
-  -- Telescope
-
-
-  -- Completions
-  "williamboman/mason.nvim",
-  "neovim/nvim-lspconfig",
-  "williamboman/mason-lspconfig.nvim",
-  "hrsh7th/cmp-nvim-lsp",
-  "hrsh7th/cmp-buffer",
-  "hrsh7th/cmp-path",
-  "hrsh7th/cmp-cmdline",
-  "hrsh7th/nvim-cmp",
-
-  "L3MON4D3/LuaSnip",
-  "saadparwaiz1/cmp_luasnip",
-
-
-  {
-    "lervag/vimtex",
-    lazy = false,     -- we don't want to lazy load VimTeX
-    -- tag = "v2.15", -- uncomment to pin to a specific release
-    init = function()
-      -- VimTeX configuration goes here
-      vim.g.tex_flavor = "latex"
-      vim.g.vimtex_view_method = "skim"
-      vim.g.vimtex_view_skim_sync = 1
-      vim.g.vimtex_view_skim_activate = 1
-      -- vim.g.vimtex_compiler_method = 'xelatex'
-      vim.g.vimtex_indent_enabled = 0
-      vim.g.vimtex_imaps_enabled = 0
-      vim.g.vimtex_mappings_enabled = 0
-      vim.g.vimtex_view_automatic = 1
-
-      vim.g.vimtex_complete_enabled = 1
-      vim.g.vimtex_syntax_enabled = 1
-
-
     end
   },
-
-  "folke/twilight.nvim",
+  
+  -- Essential plugins
+  { "nvim-lua/plenary.nvim" },
+  
+  -- LSP Support
+  { "neovim/nvim-lspconfig" },
+  { "williamboman/mason.nvim" },
+  { "williamboman/mason-lspconfig.nvim" },
+  
+  -- Treesitter
   {
-    "folke/zen-mode.nvim",
-    cmd = "ZenMode",
-    opts = {
-      plugins = {
-        gitsigns = true,
-        kitty = { enabled = false, font = "+2" },
-      },
-    },
-    keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+  },
+  
+  -- Autocompletion
+  { "hrsh7th/nvim-cmp" },
+  { "hrsh7th/cmp-nvim-lsp" },
+  { "hrsh7th/cmp-buffer" },
+  { "hrsh7th/cmp-path" },
+  { "L3MON4D3/LuaSnip" },
+  { "saadparwaiz1/cmp_luasnip" },
+  
+  -- Language specific
+  -- Python
+--   { "astral-sh/ruff-lsp" },
+  -- Julia
+--   { "JuliaEditorSupport/julia-vim" },
+  -- C/C++
+--   { "p00f/clangd_extensions.nvim" },
+  -- Rust
+--   { "simrat39/rust-tools.nvim" },
+  -- Haskell
+--   { "neovimhaskell/haskell-vim" },
+  -- OCaml
+--   { "ocaml/vim-ocaml" },
+  -- CUDA
+--   { "bfrg/vim-cuda-syntax" },
+
+  -- File Explorer
+  {
+    "nvim-tree/nvim-tree.lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    version = "*",
+    lazy = false,
+    priority = 999,
   },
 
+  -- Dashboard
+  {
+    'goolord/alpha-nvim',
+    dependencies = { 
+      'nvim-tree/nvim-web-devicons',
+      'BlakeJC94/alpha-nvim-fortune'
+    },
+    priority = 998,
+    config = function()
+      require('plugins.alpha')
+    end,
+  },
 
-  -- Neorg
+  -- Icons (required by both nvim-tree and alpha)
+  { "nvim-tree/nvim-web-devicons", lazy = false },
 
-})
+}, {}) 
