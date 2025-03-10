@@ -28,11 +28,6 @@ require("nvim-tree").setup({
   },
 })
 
--- Debug keymap to test F2 recognition
-vim.keymap.set("n", "<F2>", function()
-    print("F2 key pressed")
-end, { desc = "Test F2 key" })
 
 -- Keymaps using the nvim-tree API
 local api = require("nvim-tree.api")
-vim.keymap.set("n", "<F2>", api.tree.toggle, { desc = "Toggle file explorer" })

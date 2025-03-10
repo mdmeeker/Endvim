@@ -11,8 +11,8 @@ return {
     {'All idioms must be learned. Good idioms only need to be learned once.', '', '- Alan Cooper'},
     {'For a successful technology, reality must take precedence over public relations, for Nature cannot be fooled.', '', '- Richard Feynman'},
     {'If programmers were electricians, parallel programmers would be bomb disposal experts. Both cut wires.', '', '- Bartosz Milewski'},
-    {'No matter how far down the wrong road you have gone, turn back now.'},
-    {'Why do we never have time to do it right, but always have time to do it over?'},
+    {'No matter how far down the wrong road you have gone, turn back now.', "", ""},
+    {'Why do we never have time to do it right, but always have time to do it over?', "", ""},
     {'To iterate is human, to recurse divine.', '', '- L. Peter Deutsch'},
     {'They did not know it was impossible, so they did it!', '', '- Mark Twain'},
     {'Developing tolerance for imperfection is the key factor in turning chronic starters into consistent finishers.', '', '- Jon Acuff'},
@@ -46,7 +46,7 @@ return {
     {"(Basically) anything is linear if you zoom in far enough"},
     {"A frequentist is one whose long-term ambition is to wrong 5% of the time", "", ""},
 
-    "The only way to learn a new programming language is by writing programs in it.",
-    "The best error message is the one that never shows up.",
-    "First, solve the problem. Then, write the code.",
+    {"The only way to learn a new programming language is by writing programs in it.", "", ""},
+    {"The best error message is the one that never shows up.", "", ""},
+    {"First, solve the problem. Then, write the code.", "", ""},
 }

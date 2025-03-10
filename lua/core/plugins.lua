@@ -93,4 +93,13 @@ require("lazy").setup({
   -- Icons (required by both nvim-tree and alpha)
   { "nvim-tree/nvim-web-devicons", lazy = false },
 
+  -- Terminal
+  {
+    'akinsho/toggleterm.nvim',
+    version = "*",
+    config = function()
+      require("plugins.toggleterm")
+    end,
+  },
+
 }, {}) 
