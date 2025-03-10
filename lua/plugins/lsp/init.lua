@@ -1,84 +1,102 @@
+-- Basic Mason setup
 require("mason").setup()
 require("mason-lspconfig").setup({
-  ensure_installed = {
-    "ruff",          -- Python
-    -- "pyright",       -- Python type checking
-    "clangd",        -- C/C++
-    "julials",       -- Julia
-    "rust_analyzer", -- Rust
-    "asm_lsp",       -- Assembly
-    -- TODO: add markdown, restructured text, zig?
-  }
+  ensure_installed = { "ruff", "pyright" }
 })
 
 local lspconfig = require('lspconfig')
--- Set up nvim-cmp capabilities
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- Enable diagnostics
-vim.diagnostic.config({
-  virtual_text = true,
-  signs = true,
-  underline = true,
-  update_in_insert = false,
-  severity_sort = true,
-})
+-- Enable debug logging for LSP
+vim.lsp.set_log_level("debug")
 
--- Add borders to hover windows
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-  vim.lsp.handlers.hover, {
-    border = "rounded",
-  }
-)
-
--- Configure Ruff LSP
+-- Ruff configuration with better persistence
 lspconfig.ruff.setup({
   capabilities = capabilities,
-  init_options = {
-    settings = {
-      -- Any extra CLI arguments for `ruff` go here.
-      args = {},
+  settings = {
+    ruff = {
+      -- Keep server alive
+      serverAliveInterval = 300, -- 5 minutes
     }
-  }
-})
-
--- Disable hover in favor of another LSP if needed
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if client == nil then
-      return
-    end
-    if client.name == 'ruff' then
-      -- Disable hover in favor of another Python LSP if you add one later
-      client.server_capabilities.hoverProvider = false
-    end
+  },
+  -- More reliable root_dir detection
+  root_dir = function(fname)
+    return lspconfig.util.root_pattern(".git", "pyproject.toml", "setup.py")(fname) or vim.fn.getcwd()
   end,
-  desc = 'LSP: Disable hover capability from Ruff',
+  -- Prevent timeout
+  flags = {
+    debounce_text_changes = 150,
+    allow_incremental_sync = true,
+    exit_timeout = false, -- Prevent automatic shutdown
+  },
+  on_attach = function(client, bufnr)
+    -- Disable Ruff completions
+    client.server_capabilities.completionProvider = false
+    
+    -- Format keymap for Python files
+    vim.keymap.set('n', '<leader>rf', function()
+      vim.lsp.buf.format({ async = true })
+    end, { buffer = bufnr, desc = "Format Python code with Ruff" })
+  end,
 })
 
--- lspconfig.pyright.setup({
---   capabilities = capabilities,
---   settings = {
---     python = {
---       analysis = {
---         typeCheckingMode = "basic",
---         autoSearchPaths = true,
---         useLibraryCodeForTypes = true,
---       },
---     },
---   },
--- })
+-- Add Pyright configuration for Python intellisense
+lspconfig.pyright.setup({
+  capabilities = capabilities,
+  settings = {
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        useLibraryCodeForTypes = true,
+        diagnosticMode = "openFilesOnly",
+      },
+    },
+  },
+  on_attach = function(client, bufnr)
+    -- Disable Pyright formatting in favor of Ruff
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
+  end,
+})
 
--- Global mappings.
+-- Periodically check if Ruff is still attached
+vim.api.nvim_create_autocmd("CursorHold", {
+  pattern = "*.py",
+  callback = function(ev)
+    local clients = vim.lsp.get_active_clients({bufnr = ev.buf})
+    local has_ruff = false
+    for _, client in ipairs(clients) do
+      if client.name == "ruff" then has_ruff = true; break end
+    end
+    
+    if not has_ruff and vim.bo[ev.buf].filetype == "python" then
+      vim.cmd("LspStart ruff")
+    end
+  end
+})
+
+-- Add an auto-attached function for Pyright to match what we did for Ruff
+vim.api.nvim_create_autocmd("CursorHold", {
+  pattern = "*.py",
+  callback = function(ev)
+    local clients = vim.lsp.get_active_clients({bufnr = ev.buf})
+    local has_pyright = false
+    for _, client in ipairs(clients) do
+      if client.name == "pyright" then has_pyright = true; break end
+    end
+    
+    if not has_pyright and vim.bo[ev.buf].filetype == "python" then
+      vim.cmd("LspStart pyright")
+    end
+  end
+})
+
+-- Global LSP keymaps
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
--- Use LspAttach autocommand to only map the following keys
--- after the language server attaches to the current buffer
+-- Buffer-specific LSP keymaps
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
@@ -87,17 +105,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-    vim.keymap.set('n', '<space>wl', function()
-      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, opts)
-    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
     vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
   end,
-})
-
--- ... other language server setups can go here ... 
+}) 

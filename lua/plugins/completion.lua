@@ -20,18 +20,39 @@ cmp.setup({
     ['<Tab>'] = cmp.mapping.select_next_item(),
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
   }),
-  sources = {
+  sources = cmp.config.sources({
     { name = 'nvim_lsp', priority = 1000 },
     { name = 'luasnip', priority = 750 },
     { name = 'buffer', priority = 500 },
     { name = 'path', priority = 250 },
-  },
+  }),
+  experimental = {
+    ghost_text = true,
+  }
 })
 
--- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline({ '/', '?' }, {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = 'buffer' }
-  }
-}) 
+-- Use buffer source for `/` and `?`
+
+-- Fix the cmp-nvim-lsp error with Ruff
+-- local orig_get_trigger_characters = require('cmp_nvim_lsp.source').get_trigger_characters
+-- require('cmp_nvim_lsp.source').get_trigger_characters = function(server_name)
+--   local chars
+--   local ok, result = pcall(function()
+--     return orig_get_trigger_characters(server_name)
+--   end)
+--   if ok then
+--     chars = result
+--   else
+--     -- Fallback to reasonable defaults
+--     chars = { '.', ':' }
+--     print("Handled cmp-nvim-lsp error gracefully for " .. (server_name or "unknown server"))
+--   end
+--   return chars
+-- end
+
+-- Add this debugging command
+vim.api.nvim_create_user_command("CheckCompletion", function()
+  local bufnr = vim.api.nvim_get_current_buf()
+  print("Current sources for completion:", vim.inspect(cmp.get_config().sources))
+  print("LSP clients:", vim.inspect(vim.lsp.get_active_clients({bufnr = bufnr})))
+end, {})

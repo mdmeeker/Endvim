@@ -7,12 +7,12 @@ require('core.colorscheme')
 
 -- Wait for lazy.nvim to load plugins before configuring them
 vim.api.nvim_create_autocmd("User", {
-  pattern = "LazyVimStarted",
+  pattern = "VeryLazy",
   callback = function()
     -- Plugin configurations
-    require('plugins.nvim-tree')
     require('plugins.lsp')        -- Load LSP first
     require('plugins.completion') -- Then load completion
+    require('plugins.nvim-tree')  -- Load other plugins last
   end,
 })
 

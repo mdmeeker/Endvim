@@ -41,4 +41,7 @@ keymap.set("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 keymap.set("n", "<A-1>", ":ToggleTerm direction=float<CR>", opts)
 keymap.set("t", "<A-1>", "<C-\\><C-n>:ToggleTerm<CR>", opts)
 
+-- Force attach Ruff LSP for debugging
+keymap.set("n", "<leader>lr", function() _G.force_attach_ruff() end, { desc = "Force attach Ruff LSP" })
+
 -- Add any other keymaps you want here
