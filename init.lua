@@ -13,6 +13,7 @@ vim.api.nvim_create_autocmd("User", {
     require('plugins.lsp')        -- Load LSP first
     require('plugins.completion') -- Then load completion
     require('plugins.nvim-tree')  -- Load other plugins last
+    require('plugins.snippets')
   end,
 })
 
