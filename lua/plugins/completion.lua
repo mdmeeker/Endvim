@@ -46,29 +46,3 @@ cmp.setup({
     ghost_text = true,
   }
 })
-
--- Use buffer source for `/` and `?`
-
--- Fix the cmp-nvim-lsp error with Ruff
--- local orig_get_trigger_characters = require('cmp_nvim_lsp.source').get_trigger_characters
--- require('cmp_nvim_lsp.source').get_trigger_characters = function(server_name)
---   local chars
---   local ok, result = pcall(function()
---     return orig_get_trigger_characters(server_name)
---   end)
---   if ok then
---     chars = result
---   else
---     -- Fallback to reasonable defaults
---     chars = { '.', ':' }
---     print("Handled cmp-nvim-lsp error gracefully for " .. (server_name or "unknown server"))
---   end
---   return chars
--- end
-
--- Add this debugging command
-vim.api.nvim_create_user_command("CheckCompletion", function()
-  local bufnr = vim.api.nvim_get_current_buf()
-  print("Current sources for completion:", vim.inspect(cmp.get_config().sources))
-  print("LSP clients:", vim.inspect(vim.lsp.get_active_clients({bufnr = bufnr})))
-end, {})
