@@ -20,6 +20,27 @@ lspconfig.ruff.setup({
     ruff = {
       -- Keep server alive
       serverAliveInterval = 300, -- 5 minutes
+      
+      -- Enable import sorting
+      organizeImports = true,
+      
+      -- Enable Ruff's formatter
+      format = {
+        enabled = true,
+      },
+      
+      -- Configure linter rules including import sorting (I and F rules)
+      lint = {
+        enabled = true,
+        -- Enable the isort rule set (I)
+        select = {
+          -- Include import sorting rules
+          "I",  -- Import sorting
+          "F",  -- Formatting
+          "E",  -- Error detection
+          "W",  -- Warnings
+        },
+      },
     }
   },
   -- More reliable root_dir detection
@@ -36,10 +57,30 @@ lspconfig.ruff.setup({
     -- Disable Ruff completions
     client.server_capabilities.completionProvider = false
     
-    -- Format keymap for Python files
+    -- Enhanced Format keymap for Python files - explicitly organize imports first, then format
     vim.keymap.set('n', '<leader>rf', function()
-      vim.lsp.buf.format({ async = true })
-    end, { buffer = bufnr, desc = "Format Python code with Ruff" })
+      -- First run the import organization code action
+      vim.lsp.buf.code_action({
+        context = {
+          only = { "source.organizeImports" },
+          diagnostics = {},
+        },
+        apply = true,
+        filter = function(action)
+          return action.title == "Ruff: Organize Imports"
+        end,
+      })
+      
+      -- Then format the file after a small delay to allow imports to complete
+      vim.defer_fn(function()
+        vim.lsp.buf.format({
+          async = false,
+          filter = function(client)
+            return client.name == "ruff"
+          end
+        })
+      end, 100)
+    end, { buffer = bufnr, desc = "Sort imports and format with Ruff" })
   end,
 })
 
