@@ -10,6 +10,9 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- Enable debug logging for LSP
 vim.lsp.set_log_level("debug")
 
+-- Add this at the top of the file, after requires
+local pyright_ns = vim.api.nvim_create_namespace("pyright_diagnostics")
+
 -- Ruff configuration with better persistence
 lspconfig.ruff.setup({
   capabilities = capabilities,
@@ -49,13 +52,41 @@ lspconfig.pyright.setup({
         autoSearchPaths = true,
         useLibraryCodeForTypes = true,
         diagnosticMode = "openFilesOnly",
+        -- Keep all the diagnostic severity overrides
       },
     },
+  },
+  handlers = {
+    -- Override the default diagnostic handler to discard all diagnostics
+    ["textDocument/publishDiagnostics"] = function(_, result, ctx, config)
+      -- Only process diagnostics from Pyright
+      if ctx.client_id and vim.lsp.get_client_by_id(ctx.client_id).name == "pyright" then
+        -- Just ignore all diagnostics from Pyright
+        return
+      end
+      
+      -- For other LSPs, use the default handler
+      return vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
+    end,
   },
   on_attach = function(client, bufnr)
     -- Disable Pyright formatting in favor of Ruff
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
+    
+    -- Disable diagnostics capabilities
+    client.server_capabilities.diagnosticProvider = false
+    
+    -- Clear any existing diagnostics from Pyright's namespace
+    vim.diagnostic.reset(pyright_ns, bufnr)
+    
+    -- Add a buffer-local autocmd to clear Pyright diagnostics on change
+    vim.api.nvim_create_autocmd("BufWritePost", {
+      buffer = bufnr,
+      callback = function()
+        vim.diagnostic.reset(pyright_ns, bufnr)
+      end
+    })
   end,
 })
 
