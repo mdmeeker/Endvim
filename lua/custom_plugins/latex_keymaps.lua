@@ -1,0 +1,41 @@
+-- local ts_utils = require("nvim-treesitter.ts_utils")
+-- -- Function to find the current LaTeX environment
+-- local function find_environment()
+--   local node = ts_utils.get_node_at_cursor()
+--   local isenv = false
+--   while node do
+--     local node_type = node:type()
+--     if env_name_node then
+--   end
+-- end 
+-- -- Function to find and close the last unclosed LaTeX environment
+-- local function find_unclosed_environment()
+--   local current_line = vim.fn.line(".")   -- Get the current line number
+--   local stack = {}
+--
+--   -- Traverse lines from the current line upwards
+--   for line_number = current_line, 1, -1 do
+--     local line = vim.fn.getline(line_number)   -- Get the current line
+--     for env in line:gmatch("\\end{(.-)}") do
+--       table.insert(stack, env)                 -- Push closed environments onto the stack
+--     end
+--     for env in line:gmatch("\\begin{(.-)}") do
+--       if stack[#stack] == env then
+--         table.remove(stack)   -- Match the most recent closed environment
+--       else
+--         return env            -- Return the first unclosed environment
+--       end
+--     end
+--   end
+--
+--   return nil   -- No unclosed environment found
+-- end
+--
+-- vim.keymap.set("i", "]]", function()
+--   local env = find_unclosed_environment()
+--   if env then
+--     return "\\end{" .. env .. "}"
+--   else
+--     return ""       -- Do nothing if no unclosed environment
+--   end
+-- end, { buffer = true, expr = true, noremap = true, silent = true })
