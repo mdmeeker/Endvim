@@ -1,35 +1,35 @@
 return {
-    {
-        "yetone/avante.nvim",
-        event = "VeryLazy",
-        dependencies = {
-            "stevearc/dressing.nvim",
-            "nvim-lua/plenary.nvim",
-            "MunifTanjim/nui.nvim",
-            "nvim-tree/nvim-web-devicons",
-            { "MeanderingProgrammer/render-markdown.nvim", opts = { file_types = { "markdown", "Avante" } } },
-        },
-        opts = {
-            provider = "claude", -- Default; overridden by env vars from Keychain
-            auto_suggestions_provider = "claude",
-            behaviour = { auto_suggestions = true, auto_apply_diff_after_generation = false },
-            mappings = {
-                ask = "<leader>aa",
-                edit = "<leader>ae",
-                refresh = "<leader>ar",
-                suggestion = { accept = "<C-y>", next = "<C-n>", prev = "<C-p>", dismiss = "<C-e>" },
-            },
-            windows = { sidebar = { width = 40 } },
-            providers = { -- TODO: Update these LMFAO
-                claude = { model = "claude-3-5-sonnet-20241022" },
-                openai = { model = "gpt-4o" },
-                gemini = { model = "gemini-1.5-pro" },
-                grok = { endpoint = "https://api.x.ai/v1" },
-            },
-        },
-        config = function(_, opts)
-            require("avante").setup(opts)
-            -- Keys loaded from Keychain via ~/.zshrc
-        end,
-    },
+    -- {
+    --     "yetone/avante.nvim",
+    --     event = "VeryLazy",
+    --     dependencies = {
+    --         "stevearc/dressing.nvim",
+    --         "nvim-lua/plenary.nvim",
+    --         "MunifTanjim/nui.nvim",
+    --         "nvim-tree/nvim-web-devicons",
+    --         { "MeanderingProgrammer/render-markdown.nvim", opts = { file_types = { "markdown", "Avante" } } },
+    --     },
+    --     opts = {
+    --         provider = "claude", -- Default; overridden by env vars from Keychain
+    --         auto_suggestions_provider = "claude",
+    --         behaviour = { auto_suggestions = true, auto_apply_diff_after_generation = false },
+    --         mappings = {
+    --             ask = "<leader>aa",
+    --             edit = "<leader>ae",
+    --             refresh = "<leader>ar",
+    --             suggestion = { accept = "<C-y>", next = "<C-n>", prev = "<C-p>", dismiss = "<C-e>" },
+    --         },
+    --         windows = { sidebar = { width = 40 } },
+    --         providers = { -- TODO: Update these LMFAO
+    --             claude = { model = "claude-3-5-sonnet-20241022" },
+    --             openai = { model = "gpt-4o" },
+    --             gemini = { model = "gemini-1.5-pro" },
+    --             grok = { endpoint = "https://api.x.ai/v1" },
+    --         },
+    --     },
+    --     config = function(_, opts)
+    --         require("avante").setup(opts)
+    --         -- Keys loaded from Keychain via ~/.zshrc
+    --     end,
+    -- },
 }

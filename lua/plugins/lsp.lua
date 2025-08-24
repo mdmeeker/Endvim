@@ -1,8 +1,21 @@
 return {
-    { "williamboman/mason.nvim", opts = {} },
+    {
+        "williamboman/mason.nvim",
+        config = function()
+            require("mason").setup()
+        end,
+    },
+    {
+        "williamboman/mason-lspconfig.nvim",
+        dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
+        config = function()
+            require("mason-lspconfig").setup({
+                ensure_installed = { "texlab", "ruff", "clangd", "julials" },
+            })
+        end,
+    },
     {
         "neovim/nvim-lspconfig",
-        dependencies = { "williamboman/mason-lspconfig.nvim", "hrsh7th/cmp-nvim-lsp" },
         config = function()
         local lspconfig = require("lspconfig")
         lspconfig.pyright.setup({ settings = { python = { pythonPath = vim.fn.exepath("uv") .. " run python" } } })
@@ -33,7 +46,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
-        opts = { 
+        opts = {
             ensure_installed = { "cpp", "python", "julia", "latex", "typst", "org" },
             highlight = { enable = true, additional_vim_regex_highlighting = { "org" } },
             fold = { enable = true }
