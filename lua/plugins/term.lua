@@ -1,33 +1,3 @@
 return {
-    -- {
-    --     "akinsho/toggleterm.nvim",
-    --     version = "*",
-    --     event = "VeryLazy",
-    --     opts = {
-    --         size = function(term)
-    --         if term.direction == "horizontal" then return 15
-    --         elseif term.direction == "vertical" then return vim.o.columns * 0.4 end
-    --         end,
-    --         open_mapping = [[<C-\>]],
-    --         shade_terminals = true,
-    --         direction = "float",
-    --         shell = "/bin/zsh",
-    --         float_opts = { border = "curved", winblend = 3 },
-    --     },
-    --     keys = {
-    --         { "<leader>t", "<cmd>ToggleTerm<CR>", desc = "Toggle Terminal" },
-    --         { "<leader>ts", "<cmd>ToggleTerm direction=horizontal<CR>", desc = "Horizontal Terminal" },
-    --         { "<leader>tv", "<cmd>ToggleTerm direction=vertical<CR>", desc = "Vertical Terminal" },
-    --         {
-    --             "<leader>tp",
-    --             "<cmd>lua require('toggleterm.terminal').Terminal:new({cmd='uv run python', direction='float'}):toggle()<CR>",
-    --             desc = "Python REPL"
-    --         },
-    --         { 
-    --             "<leader>tj",
-    --             "<cmd>lua require('toggleterm.terminal').Terminal:new({cmd='julia --project', direction='float'}):toggle()<CR>",
-    --             desc = "Julia REPL"
-    --         },
-    --     },
-    -- },
+
 }

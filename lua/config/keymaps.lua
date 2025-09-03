@@ -15,6 +15,15 @@ vim.keymap.set("n", "<leader>lk", "<cmd>VimtexStop<cmd>", { desc = "Stop vimtex"
 vim.keymap.set("n", "<leader>le", "<cmd>VimtexErrors<CR>", { desc = "Show errors" })
 vim.keymap.set("n", "<leader>lt", "<cmd>VimtexTocOpen<CR>", { desc = "Table of contents" })
 
--- Typst keymaps
-vim.keymap.set("n", "<leader>lp", "<cmd>TypstPreview<CR>", { desc = "Typst Preview" })
-vim.keymap.set("n", "<leader>lc", "<cmd>TypstPreviewStop<CR>", { desc = "Stop Typst Preview" })
+
+-- Mini keymaps
+vim.keymap.set("n", "<leader>e", 
+    function()
+        local MiniFiles = require("mini.files")
+        if MiniFiles.close() then
+            return
+        end
+        MiniFiles.open()
+    end, 
+    { desc = "Toggle file explorer"}
+)
