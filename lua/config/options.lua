@@ -27,3 +27,10 @@ vim.opt.updatetime = 100                -- Time to write swap file and trigger C
 vim.opt.foldmethod = "expr"             -- Use expression-based folding
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"  -- Use TreeSitter for folding
 vim.opt.foldenable = false              -- Start with all folds open
+
+
+-- Tab and indentation
+vim.opt.tabstop = 4         -- Number of spaces for a tab
+vim.opt.shiftwidth = 4      -- Number of spaces for auto-indent
+vim.opt.expandtab = true    -- Use spaces instead of tabs
+vim.opt.softtabstop = 4     -- Number of spaces for a tab in insert mode

@@ -27,3 +27,21 @@ vim.keymap.set("n", "<leader>e",
     end, 
     { desc = "Toggle file explorer"}
 )
+vim.keymap.set("n", "<leader>gs", function()
+    require("mini.git").show()
+end, { desc = "Show git status" })
+
+vim.keymap.set("n", "<leader>gd", function()
+    require("mini.git").diff()
+end, { desc = "Show git diff" })
+
+vim.keymap.set("n", "<leader>gb", function()
+    require("mini.git").blame()
+end, { desc = "Show git blame" })
+
+
+-- Zen mode and Twilight toggles
+vim.keymap.set("n", "<leader>z", function()
+    require("zen-mode").toggle()
+end, { desc = "Toggle zen mode" })
+
