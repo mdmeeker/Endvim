@@ -1,7 +1,7 @@
 return {
     {
         "lervag/vimtex",
-        ft = "tex",
+        ft = { "tex", "bib", "*.tex", "*.bib" },
         init = function()
             vim.g.vimtex_mappings_prefix = "<leader>l"
             vim.g.tex_flavor = "latex"
