@@ -11,6 +11,9 @@ return {
         end,
     },
 
+    -- Icons
+    { "DaikyXendo/nvim-material-icon" },
+
     -- Telescope
     {
         "nvim-telescope/telescope.nvim", 
@@ -19,6 +22,11 @@ return {
         keys = {
             { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find Files" },
             { "<leader>fg", "<cmd>Telescope live_grep<CR>", desc = "Live Grep" },
+        },
+        extensions = {
+            orgmode = {
+                export_directory = "~/org/export",
+            }
         }
     },
 
@@ -76,18 +84,80 @@ return {
         end,
     },
 
+
+    {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            "rcarriga/nvim-notify",
+        },
+        config = function()
+            require("noice").setup({
+                lsp = {
+                    override = {
+                        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                        ["vim.lsp.util.stylize_markdown"] = true,
+                        ["cmp.entry.get_documentation"] = true,
+                    }
+                },
+                presets = {
+                    bottom_search = true,
+                    command_palette = true,
+                    long_message_to_split = true,
+                    inc_rename = true,
+                    lsp_doc_border = true,
+                },
+                views = {
+                    cmdline_popup = {
+                        position = { 
+                            row = "50%", 
+                            col = "50%",
+                        },
+                        size = {
+                            width = "60%",
+                            height = "auto",
+                        },
+                        border = { style = "rounded" },
+                        win_options = {
+                            winhighlight = {
+                                Normal = "NormalFloat",
+                                FloatBorder = "FloatBorder",
+                            },
+                        },
+                    },
+                    notify = {
+                        border = { style = "rounded" }
+                    },
+                },
+
+                routes = {
+                    {
+                        filter = {
+                            event = "msg_show",
+                            kind = "",
+                            any = {
+                                { find = "%d+ fewer lines" },
+                                { find = "%d+ more lines" },
+                                { find = "%d+ lines yanked" },
+                                { find = "%d+ lines changed" },
+                            },
+                        },
+                        opts = { skip = true },
+                    },
+                },
+
+                require("telescope").load_extension("noice")
+            })
+        end
+    },
+
     -- Dashboard with image support (random from dashboard_images, no keywords)
     {
         "goolord/alpha-nvim",
-        dependencies = { "3rd/image.nvim" },
         config = function()
             local alpha = require("alpha")
             local dashboard = require("alpha.themes.dashboard")
-    
-            -- Set up image rendering
-            require("image").setup({
-                backend = "kitty",
-            })
     
             -- Dashboard sections: Quote in header, buttons in "footer" position
             local fortune = require("alpha.fortune")
@@ -104,37 +174,11 @@ return {
             }
             dashboard.section.buttons.opts.hl = "Type"
     
-            -- Random image selection using vim.fn.glob (no external commands)
-            local image_dir = vim.fn.expand("~/.config/nvim/dashboard_images/")
-            local imgs = vim.fn.glob(image_dir .. "*.{jpg,png,jpeg}", false, true)  -- List JPGs, PNGs, JPEGs
-            if #imgs == 0 then
-                print("No images found in " .. image_dir)  -- Debug if none found
-                return  -- Skip image if none available
-            end
-            local image_path = imgs[math.random(#imgs)]
-    
-            -- Default dimensions (fallback if magick fails)
-            local image_width = 70
-            local image_height = 50
-    
-            -- Try to get dimensions with ImageMagick (install if not present: brew install imagemagick)
-            local success, dim = pcall(io.popen, "magick identify -ping -format '%w\n%h' " .. vim.fn.shellescape(image_path))
-            if success and dim then
-                local i_width, i_height = dim:read("*n", "*n")
-                assert(dim):close()
-                i_width, i_height = i_width or image_width, i_height or image_height
-                if (i_width * 0.75) < i_height then
-                    image_width = math.ceil(i_width / i_height * image_height)
-                end
-            else
-                print("Warning: Could not get image dimensions (install ImageMagick?) Using defaults.")
-            end
-    
             -- Layout: quote > padding (for image space) > buttons
             dashboard.opts.layout = {
                 { type = "padding", val = 4 },
                 dashboard.section.header,
-                { type = "padding", val = image_height + 2 },
+                { type = "padding", val = 4 },
                 dashboard.section.buttons,
             }
     
@@ -144,59 +188,47 @@ return {
             vim.cmd([[
                 autocmd FileType alpha setlocal nofoldenable
             ]])
-    
-            -- Image Integration
-            local image = nil
-    
-            vim.api.nvim_create_autocmd("User", {
-                pattern = "AlphaReady",
-                desc = "Render an image on the dashboard",
-                callback = function()
-                    vim.go.laststatus = 0
-                    vim.opt.showtabline = 0
-                    vim.opt.signcolumn = "no"
-                    vim.opt.foldcolumn = "0"
-    
-                    local buf = vim.api.nvim_get_current_buf()
-                    local win = vim.api.nvim_get_current_win()
-                    local win_width = vim.api.nvim_win_get_width(win)
-                    print("Window width: " .. win_width .. ", Image width: " .. image_width)
-    
-                    -- Calculate column to center the image.
-                    local col = tonumber(math.floor((win_width - image_width) / 2))
-                    print("Column: " .. col)
-
-                    -- Delay rendering so the image doesn't slow startup
-                    vim.defer_fn(function()
-                        if vim.api.nvim_get_current_buf() ~= buf then return end
-                        image = require("image").from_file(image_path, {
-                            window = win,
-                            buffer = nil,
-                            width = image_width,
-                            height = image_height,
-                            x = col,
-                            y = 15,
-                            with_virtual_padding = false,
-                            inline = false,
-                            id = image_path
-                        })
-                        local old_max_height_window_percentage = image.global_state.options.max_height_window_percentage
-                        image.global_state.options.max_height_window_percentage = 75
-                        image:render()
-                        image.global_state.options.max_height_window_percentage = old_max_height_window_percentage
-                    end, 150)
-                end,
-            })
-    
-            vim.api.nvim_create_autocmd("BufUnload", {
-                buffer = 0,
-                desc = "Cleanup image when leaving alpha",
-                callback = function()
-                    vim.go.laststatus = 3
-                    vim.opt.showtabline = 2
-                    if image then image:clear() end
-                end,
-            })
         end,
     },
+
+
+
+    -- Nvim-tree
+    {
+        "nvim-tree/nvim-tree.lua",
+        dependencies = { "DaikyXendo/nvim-material-icon" },
+        cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+        keys = {
+            { "<leader>ft", ":NvimTreeToggle<CR>", desc = "Toggle nvim-tree sidebar" },
+            { "<leader>fT", ":NvimTreeFocus<CR>", desc = "Focus nvim-tree sidebar" },
+        },
+        config = function()
+            require("nvim-tree").setup({
+                disable_netrw = true,
+                hijack_netrw = true,
+                filters = {
+                    dotfiles = false,
+                    git_ignored = false,
+                },
+                git = {
+                    enable = true,
+                },
+                actions = {
+                    open_file = {
+                        quit_on_open = false,
+                    },
+                },
+            })
+
+            -- Auto-close if nvim-tree is the last window
+            vim.api.nvim_create_autocmd("BufEnter", {
+                nested = true,
+                callback = function()
+                    if #vim.api.nvim_list_wins() == 1 and vim.api.nvim_buf_get_name(0):match("NvimTree_") ~= nil then
+                        vim.cmd("quit")
+                    end
+                end,
+            })
+        end
+    }
 }

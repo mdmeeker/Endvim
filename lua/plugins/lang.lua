@@ -14,4 +14,17 @@ return {
             vim.g.vimtex_view_general_options = "-a Preview @pdf"
         end,
     },
+
+    {
+        "folke/trouble.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        cmd = "Trouble",
+        config = function()
+            require("trouble").setup({
+                mode = "document_diagnostics",
+                auto_close = true,
+                signs = { error = "●", warning = "●", hint = "●", information = "●" },  -- Match your statusline
+            })
+        end,
+    }
 }

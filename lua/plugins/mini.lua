@@ -4,20 +4,32 @@ return {
         version = false,
 
         config = function()
-            require("mini.animate").setup({ cursor = { enabled = false } })
-            require("mini.icons").setup()
+            require("mini.animate").setup({
+                cursor = { 
+                    enable = false
+                },
+            })
+            -- require("mini.icons").setup()
 
             require("mini.surround").setup()
 
             require("mini.files").setup({
                 options = {
                     use_as_default_explorer = true,
+                    permanent_delete = true,
+                    permanent_create = true,
                 },
                 windows = {
                     preview = true,
-                    width_focus = 20,
-                    width_preview = 20,
-                }
+                    width_focus = 50,
+                    width_preview = 50,
+                    width_nofocus = 30,
+                },
+                mappings = {
+                    go_in = "L",
+                    go_out = "H",
+                    show_help = "g?",
+                },
             })
             require("mini.diff").setup({
                 view = {
@@ -86,6 +98,31 @@ return {
                 },
                 use_icons = true,
             })
+
+            require("mini.comment").setup()
+            require("mini.pairs").setup()
+
+            require("mini.tabline").setup(
+                {
+                    tabpage_section = "left",
+                    show_icons = true,
+                }
+            )
         end,
+    },
+    {
+        "NeogitOrg/neogit",
+        dependencies = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim" },
+        cmd = "Neogit",
+        config = function()
+            require("neogit").setup({
+                integrations = { diffview = true },
+                signs = {
+                    section = { ">", "v" },
+                    item = { ">", "v" },
+                    hunk = { "", "" },
+                }
+            })
+        end
     }
 }
