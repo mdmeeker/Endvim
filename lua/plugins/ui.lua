@@ -34,13 +34,26 @@ return {
     { 
         "folke/which-key.nvim", 
         config = function()
-            require("which-key").setup({
+            local wk = require("which-key")
+
+            wk.setup({
                 plugins = {
                     spelling = true
                 },
                 win = {
                     border = "rounded",
+                    height = { min = 5, max = 25 },
                 },
+            })
+
+            wk.add({
+                { "<leader>b", group = "Buffer" },
+                { "<leader>l", group = "LaTeX/LSP" },
+                { "<leader>t", group = "Terminal" },
+                { "<leader>g", group = "Git" },
+                { "<leader>z", group = "Zen Mode" },
+                { "<leader>f", group = "File/Find" },
+                { "<leader>o", group = "Org Mode" },
             })
         end,
     },
@@ -110,10 +123,6 @@ return {
                 },
                 views = {
                     cmdline_popup = {
-                        position = { 
-                            row = "50%", 
-                            col = "50%",
-                        },
                         size = {
                             width = "60%",
                             height = "auto",
@@ -228,6 +237,30 @@ return {
                         vim.cmd("quit")
                     end
                 end,
+            })
+        end
+    },
+
+    -- ToggleTerm for floating/persistent terminals
+    {
+        "akinsho/toggleterm.nvim",
+        keys = { 
+            { "<leader>tt", "<cmd>ToggleTerm direction=float<CR>", desc = "Toggle floating terminal" }, 
+            { "<leader>tb", "<cmd>ToggleTerm direction=horizontal<CR>", desc = "Toggle horizontal terminal" }, 
+            { "<leader>tv", "<cmd>ToggleTerm direction=vertical<CR>", desc = "Toggle vertical terminal" }, 
+        },
+        config = function()
+            require("toggleterm").setup({
+                size = 20,
+                open_mapping = [[<C-\>]],
+                shade_terminals = true,
+                direction = "horizontal",
+                float_opts = {
+                    border = "curved",
+                    width = math.floor(vim.o.columns * 0.7),
+                    height = math.floor(vim.o.lines * 0.7),
+                    windblend = 10,
+                },
             })
         end
     }

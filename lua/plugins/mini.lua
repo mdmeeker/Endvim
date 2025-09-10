@@ -8,8 +8,10 @@ return {
                 cursor = { 
                     enable = false
                 },
+                resize = {
+                    enable = false
+                }
             })
-            -- require("mini.icons").setup()
 
             require("mini.surround").setup()
 

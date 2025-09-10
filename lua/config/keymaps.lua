@@ -8,6 +8,13 @@ vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Move to lower window" })
 vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move to upper window" })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
 
+-- Window resizing
+vim.keymap.set("n", "<A-h>", "<cmd>vertical resize -2<CR>", { desc = "Decrease window width" })
+vim.keymap.set("n", "<A-l>", "<cmd>vertical resize +2<CR>", { desc = "Increase window width" })
+vim.keymap.set("n", "<A-j>", "<cmd>resize +2<CR>", { desc = "Increase window height" })
+vim.keymap.set("n", "<A-k>", "<cmd>resize -2<CR>", { desc = "Decrease window height" })
+
+
 -- LaTeX keymaps (vimtex)
 vim.keymap.set("n", "<leader>ll", "<cmd>VimtexCompile<CR>", { desc = "Compile LaTeX" })
 vim.keymap.set("n", "<leader>lv", "<cmd>VimtexView<CR>", { desc = "View PDF" })
@@ -45,10 +52,10 @@ end, { desc = "Show git blame" })
 vim.keymap.set("n", "<leader>bd", ":lua MiniTabline.close_buffer()<CR>", { desc = "Close buffer" })
 
 -- Neogit
-vim.keymap.set("n", "<leader>gg", ":Neogit<CR>", { desc = "Show neogit" })
-vim.keymap.set("n", "<leader>gc", ":Neogit commit<CR>", { desc = "Commit" })
-vim.keymap.set("n", "<leader>gp", ":Neogit pull<CR>", { desc = "Pull" })
-vim.keymap.set("n", "<leader>gP", ":Neogit push<CR>", { desc = "Push" })
+vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<CR>", { desc = "Show neogit" })
+vim.keymap.set("n", "<leader>gc", "<cmd>Neogit commit<CR>", { desc = "Commit" })
+vim.keymap.set("n", "<leader>gp", "<cmd>Neogit pull<CR>", { desc = "Pull" })
+vim.keymap.set("n", "<leader>gP", "<cmd>Neogit push<CR>", { desc = "Push" })
 
 
 -- Zen mode and Twilight toggles
@@ -56,3 +63,7 @@ vim.keymap.set("n", "<leader>z", function()
     require("zen-mode").toggle()
 end, { desc = "Toggle zen mode" })
 
+-- Terminal keymaps
+vim.keymap.set("n", "<leader>tt", "<cmd>ToggleTerm direction=float<CR>", { desc = "Toggle floating terminal" })
+vim.keymap.set("n", "<leader>tb", "<cmd>ToggleTerm direction=horizontal<CR>", { desc = "Toggle horizontal split" })
+vim.keymap.set("n", "<leader>tv", "<cmd>ToggleTerm direction=vertical<CR>", { desc = "Toggle vertical split" })
