@@ -12,6 +12,8 @@ return {
             vim.g.vimtex_view_method = "general"
             vim.g.vimtex_view_general_viewer = "open"
             vim.g.vimtex_view_general_options = "-a Preview @pdf"
+
+            vim.g.vimtex_complete_enabled = 0
         end,
     },
 

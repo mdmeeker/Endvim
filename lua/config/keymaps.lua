@@ -22,6 +22,16 @@ vim.keymap.set("n", "<leader>lk", "<cmd>VimtexStop<cmd>", { desc = "Stop vimtex"
 vim.keymap.set("n", "<leader>le", "<cmd>VimtexErrors<CR>", { desc = "Show errors" })
 vim.keymap.set("n", "<leader>lt", "<cmd>VimtexTocOpen<CR>", { desc = "Table of contents" })
 
+-- Org mode keymaps
+vim.keymap.set(
+    "n", 
+    "<leader>on", 
+    function ()
+        vim.cmd("vsp ~/org/notes.org")
+    end,
+    { desc = "Open org notes" }
+)
+
 
 -- File explorers
 vim.keymap.set("n", "<leader>e", 
