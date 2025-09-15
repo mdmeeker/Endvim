@@ -19,23 +19,24 @@ return {
             org_hide_leading_stars = true,
             org_startup_folded = "overview",
             org_capture_templates = {
-              t = {
+              {
                 description = "Todo",
                 template = "* TODO %?\n  %u",
+                keys = "t",
                 target = "~/org/notes.org",
               },
-              n = {
+              {
                 description = "Note",
                 template = "* %?\n  %u :NOTE:",
+                keys = "n",
                 target = "~/org/notes.org",
               },
             },
             mappings = {
-              global = {
-                org_agenda = "<leader>oa",
-                org_capture = "<leader>oc",
-                org_open_notes = "<leader>on",
-              },
+            --   global = {
+            --     org_agenda = "<leader>oa",
+            --     org_capture = "<leader>oc",
+            --   },
             },
           })
           require("org-bullets").setup()

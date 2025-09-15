@@ -23,7 +23,12 @@ return {
                 grok = {
                     endpoint = "https://api.x.ai/v1/chat/completions",
                     model = "grok-4",
-
+                    timeout = 30000,
+                    disable_tools = true,
+                    extra_request_body = {
+                        temperature = 0.7,
+                        max_tokens = 20480,
+                    },
                 },
             },
         },
