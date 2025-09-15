@@ -32,24 +32,16 @@ return {
                 target = "~/org/notes.org",
               },
             },
-            mappings = {
-            --   global = {
-            --     org_agenda = "<leader>oa",
-            --     org_capture = "<leader>oc",
-            --   },
-            },
           })
           require("org-bullets").setup()
-          require("headlines").setup(
-            {
+          require("headlines").setup({
                 org = {
                     headline_highlights = { "Headline1", "Headline2", "Headline3" },
                     bullet_highlights = { "OrgBullet" },
-                    bullets = { "◉", "○", "✸", "✿" }, -- Custom bullets for visual hierarchy
-                    fat_headlines = false, -- Slimmer headlines for cleaner look
+                    bullets = { "◉", "○", "✸", "✿" },
+                    fat_headlines = false,
                 },
-            }
-          )
+            })
         end,
-      },
+    },
 }

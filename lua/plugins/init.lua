@@ -1,10 +1,10 @@
 return {
-    { import = "plugins.ai" },
     { import = "plugins.core" },
     { import = "plugins.editing" },
-    { import = "plugins.files" },
-    { import = "plugins.git" },
+    { import = "plugins.ui" },
+    { import = "plugins.ai" },
     { import = "plugins.lang" },
     { import = "plugins.lsp" },
-    { import = "plugins.ui" },
+    { import = "plugins.git" },
+    { import = "plugins.files" },
 }

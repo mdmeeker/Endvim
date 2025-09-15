@@ -7,9 +7,13 @@ return {
             local opts = {
                 transparent = true,
                 styles = {
-                    type = { bold = true },
+                    comments = {},
+                    functions = {},
+                    keywords = {},
                     lsp = { underline = true },
                     match_paren = { underline = true },
+                    type = { bold = true },
+                    variables = {}
                 },
             }
             require("no-clown-fiesta").setup(opts)

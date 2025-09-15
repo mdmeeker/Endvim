@@ -9,21 +9,7 @@ return {
             vim.g.vimtex_compiler_method = "latexmk"
             vim.g.vimtex_compiler_latexmk = { options = { "-pdf", "-interaction=nonstopmode", "-synctex=1" } }
             vim.g.vimtex_view_method = "zathura"
-
             vim.g.vimtex_complete_enabled = 0
         end,
     },
-
-    {
-        "folke/trouble.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        cmd = "Trouble",
-        config = function()
-            require("trouble").setup({
-                mode = "document_diagnostics",
-                auto_close = true,
-                signs = { error = "●", warning = "●", hint = "●", information = "●" },  -- Match your statusline
-            })
-        end,
-    }
 }
