@@ -4,6 +4,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 
 vim.opt.rtp:prepend(lazypath)
-require("config.options")
-require("config.keymaps")
+require("options")
+require("keymaps")
 require("lazy").setup("plugins", { performance = { rtp = { disabled_plugins = { "netrwPlugin" } } } })

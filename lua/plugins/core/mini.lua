@@ -44,12 +44,6 @@ return {
                 auto_open = true,
             })
 
-            require("mini.tabline").setup({
-                tabpage_section = "left",
-                show_icons = true,
-            })
-
-
             require("mini.pairs").setup({
                 modes = { insert = true, command = true, terminal = true },
                 mappings = {

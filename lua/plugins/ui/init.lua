@@ -1,4 +1,5 @@
 return {
+    { import = "plugins.ui.tabline" },
     { import = "plugins.ui.statusline" },
     { import = "plugins.ui.telescope" },
     { import = "plugins.ui.whichkey" },
