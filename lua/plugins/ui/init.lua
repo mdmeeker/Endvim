@@ -8,4 +8,8 @@ return {
     { import = "plugins.ui.dashboard" },
     { import = "plugins.ui.explorer" },
     { import = "plugins.ui.terminal" },
+    { import = "plugins.ui.gitsigns" },
+    { import = "plugins.ui.hydra" },
+    { import = "plugins.ui.window-select" },
+    { import = "plugins.ui.quickfix" },
 }
