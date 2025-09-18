@@ -12,9 +12,6 @@ return {
             {
                 "L3MON4D3/LuaSnip",
                 event = { "InsertEnter", "CmdlineEnter" },
-                dependencies = {
-                    "ramadriz/friendly-snippets",
-                },
                 build = "make install_jsregexp",
                 
                 config = function()
@@ -163,8 +160,8 @@ return {
                 formatting = {
                     fields = { "kind", "abbr", "menu" },
                     format = function(_, vim_item)
-                        vim_item.menu = vim_item.kind,
-                        vim_item.kind = kind_icons[vim_item.kind] or vim_item.kind,
+                        vim_item.menu = vim_item.kind
+                        vim_item.kind = kind_icons[vim_item.kind] or vim_item.kind
                         return vim_item
                     end,
                 },

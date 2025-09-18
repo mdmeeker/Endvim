@@ -1,3 +1,4 @@
 return {
-    { import = "plugins.editing.comment" },
+    { import = "plugins.editor.fold" },
+    { import = "plugins.editor.parinfer" },
 }

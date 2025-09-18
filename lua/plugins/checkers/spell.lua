@@ -1,6 +1,6 @@
 -- Enable spell checking
 vim.opt.spell = true
-vim.opt.spelling = { "en_us" }
+vim.opt.spelllang = { "en_us" }
 vim.opt.spelloptions = { "camel", "noplainbuffer" }
 
 -- Append custom spellfile
@@ -14,3 +14,5 @@ else
         vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
     }
 end
+
+return {}
