@@ -19,18 +19,6 @@ return {
                 layout = {
                     spacing = 3,
                 },
-                spec = {
-                    mode = { "n", "v" },
-                    -- Hide certain patterns (copying nyoom's hidden config)
-                    ["<silent>"] = { mode = { "n", "v" } },
-                    ["<cmd>"] = { mode = { "n", "v" } },
-                    ["<Cmd>"] = { mode = { "n", "v" } },
-                    ["<CR>"] = { mode = { "n", "v" } },
-                    ["call"] = { mode = { "n", "v" } },
-                    ["lua"] = { mode = { "n", "v" } },
-                    ["^:"] = { mode = { "n", "v" } },
-                    ["^ "] = { mode = { "n", "v" } },
-                },
                 triggers = {
                     -- Disable j/k in insert and visual mode (copying nyoom)
                     { "<auto>", mode = "nxso" },

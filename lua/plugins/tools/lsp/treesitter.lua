@@ -15,13 +15,18 @@ return {
         build = ":TSUpdate",
         dependencies = {
             { "nvim-treesitter/nvim-treesitter-textobjects", cmd = "TSPlayground" },
-            "HiPhish/nvim-ts-rainbow2",
+            "HiPhish/rainbow-delimiters.nvim",
             "JoosepAlviste/nvim-ts-context-commentstring",
             "nvim-treesitter/nvim-treesitter-refactor",
             "nvim-treesitter/nvim-treesitter-textobjects",
             { "ggandor/leap-ast.nvim", optional = true },
         },
         config = function()
+
+            vim.g.skip_ts_context_commentstring_module = true
+            require("ts_context_commentstring").setup()
+
+
             local treesitter_filetypes = {
                 "vimdoc", "fennel", "vim", "regex", "query",
                 "c", "cpp", "rust", "toml", "lua", "python",
@@ -31,17 +36,6 @@ return {
             }
 
             local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-
-            -- TODO: Org mode parser, if needed?
-            -- parser_config.org = {
-            --     filetype = "org",
-            --     install_info = {
-            --         url = "https://github.com/emiasims/nvim-treesitter-org",
-            --         files = { "src/parser.c", "src/scanner.c" },
-            --         branch = "main",
-            --     },
-            -- }
-            -- table.insert(treesitter_filetypes, "org")
 
             -- Neorg parser
             parser_config.norg = {
@@ -73,18 +67,6 @@ return {
             table.insert(treesitter_filetypes, "norg_meta")
             table.insert(treesitter_filetypes, "norg_table")
 
-            local function setup_rainbow_colors()
-                vim.api.nvim_set_hl(0, "TSRainbowRed", { fg = "#b46958", bg = "NONE" })
-                vim.api.nvim_set_hl(0, "TSRainbowYellow", { fg = "#F5BF75", bg = "NONE" })
-                vim.api.nvim_set_hl(0, "TSRainbowBlue", { fg = "#BAD7FF", bg = "NONE" })
-                vim.api.nvim_set_hl(0, "TSRainbowOrange", { fg = "#FFA557", bg = "NONE" })
-                vim.api.nvim_set_hl(0, "TSRainbowGreen", { fg = "#90A959", bg = "NONE" })
-                vim.api.nvim_set_hl(0, "TSRainbowViolet", { fg = "#AA749F", bg = "NONE" })
-                vim.api.nvim_set_hl(0, "TSRainbowCyan", { fg = "#88AFA2", bg = "NONE" })
-            end
-
-            setup_rainbow_colors()
-
             local has_leap_ast, leap_ast = pcall(require, "leap-ast")
             if has_leap_ast then
                 vim.keymap.set({ "n", "x", "o" }, "gs", leap_ast.leap, { desc = "Leap AST" })
@@ -104,6 +86,7 @@ return {
 
                 context_commentstring = {
                     enable = true,
+                    enable_autocmd = false,
                 },
 
                 refactor = {
