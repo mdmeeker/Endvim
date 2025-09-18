@@ -22,7 +22,7 @@ return {
             end
 
             local function lsp_status()
-                local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+                local clients = vim.lsp.get_clients({ bufnr = 0 })
                 if #clients == 0 then return "" end
                 return " LSP: " .. table.concat(vim.tbl_map(function(c) return c.name end, clients), ", ")
             end

@@ -3,15 +3,33 @@ return {
         "williamboman/mason.nvim",
         cmd = { "Mason", "MasonLog" },
         config = function()
-            local mason_tools = {}
-
             require("mason").setup({
                 ui = {
                     border = "solid",
                 },
                 PATH = "skip"
             })
-
+        end,
+    },
+    {
+        "williamboman/mason-lspconfig.nvim",
+        dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
+        config = function()
+            require("mason-lspconfig").setup({
+                ensure_installed = { 
+                    "clangd", "julials", "jsonls", "texlab", "lua_ls", 
+                    "marksman", "ruff", "pylsp", "rust_analyzer", 
+                    "bashls", "yamlls"
+                },
+                automatic_installation = true,
+            })
+        end,
+    },
+    {
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
+        dependencies = { "williamboman/mason.nvim" },
+        config = function()
+            local mason_tools = {}
             -- CC
             table.insert(mason_tools, "clangd")
             table.insert(mason_tools, "clang-format")
@@ -36,12 +54,12 @@ return {
 
             -- Python
             table.insert(mason_tools, "ruff")
-            table.insert(mason_tools, "pylsp")
+            table.insert(mason_tools, "python-lsp-server")
             table.insert(mason_tools, "debugpy")
 
             -- Rust
             table.insert(mason_tools, "rust-analyzer")
-            table.insert(mason_tools, "rustfmt")
+            -- table.insert(mason_tools, "rustfmt") ;; NOTE: Installed with rustup instead of mason
 
             -- Bash/sh
             table.insert(mason_tools, "bash-language-server")
@@ -50,23 +68,13 @@ return {
             -- YAML
             table.insert(mason_tools, "yaml-language-server")
 
-            if #mason_tools > 0 then
-                vim.cmd("MasonInstall " .. table.concat(mason_tools, " "))
-            end
-        end,
-    },
-    {
-        "williamboman/mason-lspconfig.nvim",
-        dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
-        config = function()
-            require("mason-lspconfig").setup({
-                ensure_installed = { 
-                    "clangd", "julials", "json-lsp", "texlab", "lua_ls", 
-                    "marksman", "ruff", "pylsp", "rust_analyzer", 
-                    "bashls", "yamlls"
-                },
-                automatic_installation = true,
+            require("mason-tool-installer").setup({
+                ensure_installed = mason_tools,
+                auto_update = false,
+                run_on_start = true,
+                start_delay = 3000,
+                debounce_hours = 168,
             })
-        end,
+        end
     },
 }

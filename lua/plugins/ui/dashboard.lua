@@ -1,5 +1,6 @@
 return {
     {
+        -- TODO: Sophisticate!
         "goolord/alpha-nvim",
         config = function()
             local alpha = require("alpha")

@@ -6,11 +6,13 @@ return {
             "nvim-lua/plenary.nvim",
 
             -- Extensions
-            { "nvim-telescope/telescope-ui-select.nvim", optional = true },
-            { "nvim-telescope/telescope-file-browser.nvim", optional = true },
+            "nvim-telescope/telescope-ui-select.nvim",
+            "nvim-telescope/telescope-file-browser.nvim",
+            "nvim-telescope/telescope-project.nvim",
+            "LukasPietzschmann/telescope-tabs",
+
+            -- Optional ones
             { "nvim-telescope/telescope-media-files.nvim", optional = true },
-            { "nvim-telescope/telescope-project.nvim", optional = true },
-            { "LukasPietzschmann/telescope-tabs.nvim", optional = true },
             { "jvgrootveld/telescope-zoxide", optional = true },
 
             -- FZF native for performance
@@ -66,7 +68,7 @@ return {
             safe_load_extension("file_browser")
             safe_load_extension("project")
             safe_load_extension("fzf")
-            safe_load_extension("tabs")
+            safe_load_extension("telescope-tabs")
 
             -- Media files
             if vim.fn.executable("ueberzug") == 1 then
