@@ -54,19 +54,19 @@ return {
                 }
             })
 
-            telescope.load_extension("ui-select")
-            telescope.load_extension("file_browser")
-            telescope.load_extension("project")
-
-            -- FZF native for performance
-            if pcall(require, "telescope._extensions.fzf") then
-                telescope.load_extension("fzf")
+            local function safe_load_extension(name)
+                local ok, err = pcall(telescope.load_extension, name)
+                if not ok then
+                    vim.notify(string.format("Telescope extension '" .. name .. "' not available", vim.log.levels.DEBUG))
+                end
+                return ok
             end
 
-            -- Tabs
-            if pcall(require, "telescope._extensions.tabs") then
-                telescope.load_extension("tabs")
-            end
+            safe_load_extension("ui-select")
+            safe_load_extension("file_browser")
+            safe_load_extension("project")
+            safe_load_extension("fzf")
+            safe_load_extension("tabs")
 
             -- Media files
             if vim.fn.executable("ueberzug") == 1 then
