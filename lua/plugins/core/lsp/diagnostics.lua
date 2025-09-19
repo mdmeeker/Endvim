@@ -48,10 +48,9 @@ return {
             table.insert(sources, null_ls.builtins.diagnostics.ruff) -- Python
             table.insert(sources, null_ls.builtins.diagnostics.clang_check) -- C/C++
             table.insert(sources, null_ls.builtins.diagnostics.markdownlint) -- Markdown
-            table.insert(sources, null_ls.builtins.diagnostics.actionlint) -- Github actions
-            table.insert(sources, null_ls.builtins.diagnostics.checkmake) -- Makefile
-            table.insert(sources, null_ls.builtins.diagnostics.cmake_lint) -- Cmake
-            table.insert(sources, null_ls.builtins.diagnostics.cmake_lint) -- Cmake
+            -- table.insert(sources, null_ls.builtins.diagnostics.actionlint) -- Github actions
+            -- table.insert(sources, null_ls.builtins.diagnostics.checkmake) -- Makefile
+            -- table.insert(sources, null_ls.builtins.diagnostics.cmake_lint) -- Cmake
 
 
             -- Code actions
