@@ -4,6 +4,18 @@ return {
 		"neovim/nvim-lspconfig",
 		config = function()
 			local lspconfig = require("lspconfig")
+
+            -- LSP handler UI improvements
+            vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+                border = "solid"
+            })
+            
+            vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+                border = "solid"
+            })
+
+            -- TODO: See rest of the shit on the branch
+
 			lspconfig.pyright.setup({ settings = { python = { pythonPath = vim.fn.exepath("uv") .. " run python" } } })
 			for _, server in ipairs({ "clangd", "julials", "texlab" }) do
 				lspconfig[server].setup({})
@@ -13,9 +25,12 @@ return {
 	{
 		"hrsh7th/nvim-cmp",
 		dependencies = {
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-buffer",
+            "onsails/lspkind.nvim",
 			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-cmdline",
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-nvim-lsp-signature-help",
 			"saadparwaiz1/cmp_luasnip",
 			{
 				"L3MON4D3/LuaSnip",
@@ -40,6 +55,7 @@ return {
 		config = function()
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
+            local lspkind = require("lspkind")
 
 			vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
@@ -131,11 +147,11 @@ return {
 
                 formatting = {
                     fields = { "kind", "abbr", "menu" },
-                    format = function(_, vim_item)
-                        vim_item.menu = vim_item.kind
-                        vim_item.kind = kind_icons[vim_item.kind] or vim_item.kind
-                        return vim_item
-                    end,
+                    format = lspkind.cmp_format({
+                        mode = "symbol_text",
+                        maxwidth = 50,
+                        ellipsis_char = "...",
+                    })
                 },
 			})
 
