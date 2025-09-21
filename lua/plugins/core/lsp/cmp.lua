@@ -97,6 +97,7 @@ return {
 					entries = {
 						name = "custom",
 						selection_order = "near_cursor",
+                        max_item_count = 7,
 					},
 				},
 

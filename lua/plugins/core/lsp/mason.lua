@@ -5,7 +5,7 @@ return {
         config = function()
             require("mason").setup({
                 ui = { 
-                    border = "solid",
+                    border = "rounded",
                 },
                 PATH = "skip",
             })
@@ -33,6 +33,7 @@ return {
             -- CC
             table.insert(mason_tools, "clangd")
             table.insert(mason_tools, "clang-format")
+            table.insert(mason_tools, "clang-check")
             table.insert(mason_tools, "codelldb")
             
             -- Julia
@@ -47,6 +48,7 @@ return {
             -- Lua
             table.insert(mason_tools, "lua-language-server")
             table.insert(mason_tools, "stylua")
+            table.insert(mason_tools, "selene")
             
             -- Markdown
             table.insert(mason_tools, "marksman")

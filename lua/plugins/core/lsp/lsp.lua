@@ -74,7 +74,7 @@ return {
             end
 
 			cmp.setup({
-                experiemental = {
+                experimental = {
                     ghost_text = false,
                 },
                 window = {

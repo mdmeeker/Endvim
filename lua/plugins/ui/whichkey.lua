@@ -21,7 +21,7 @@ return {
                 { "<leader>g", group = "Git" },
                 { "<leader>z", group = "Zen Mode" },
                 { "<leader>f", group = "File/Find" },
-                { "<leader>o", group = "Org Mode" },
+                { "<leader>o", group = "Neorg" },
             })
         end,
     },

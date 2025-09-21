@@ -22,15 +22,16 @@ return {
             { "ggandor/leap-ast.nvim", optional = true },
         },
         opts = {
-            ensure_installed = { "cpp", "python", "julia", "latex", "typst", "org", "markdown", "markdown_inline" },
+            ensure_installed = { "cpp", "python", "julia", "typst", "org", "markdown", "markdown_inline" },
             highlight = { enable = true, additional_vim_regex_highlighting = { "org", "markdown", "markdown_inline" } },
             fold = { enable = true }
         },
 
         config = function()
-
             vim.g.skip_ts_context_commentstring_module = true
-            require("ts_context_commentstring").setup()
+            require("ts_context_commentstring").setup({
+                enable_autocmd = false,
+            })
 
 
             local treesitter_filetypes = {
@@ -84,17 +85,14 @@ return {
                 highlight = {
                     enable = true,
                     use_languagetree = true,
+                    disable = { "latex" },
                 },
 
                 indent = {
                     enable = true,
+                    disable = { "latex" },
                 },
-
-                context_commentstring = {
-                    enable = true,
-                    enable_autocmd = false,
-                },
-
+               
                 refactor = {
                     enable = true,
                     keymaps = {
@@ -113,7 +111,6 @@ return {
                     query = {
                         "rainbow-parens",
                         html = "rainbow-tags",
-                        latex = "rainbow-blocks",
                         tsx = "rainbow-tags",
                         vue = "rainbow-tags",
                     }

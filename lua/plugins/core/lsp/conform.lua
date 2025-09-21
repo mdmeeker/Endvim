@@ -6,6 +6,14 @@ return {
                 format_on_save = {
                     timeout_ms = 1000,
                     lsp_fallback = true,
+                    filter = function(bufnr)
+                        local filetype = vim.bo[bufnr].filetype
+                        local disabled_filetypes = {
+                            "markdown", "markdown_inline", "typst", "org", "norg", "norg_meta", "norg_table",
+                            "git_rebase", "gitattributes", "gitcommit", "tex", "latex"
+                        }
+                        return not vim.tbl_contains(disabled_filetypes, filetype)
+                    end
                 },
                 formatters_by_ft = {
                     lua = { "stylua" },
