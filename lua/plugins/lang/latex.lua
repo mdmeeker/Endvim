@@ -22,7 +22,12 @@ return {
             vim.wo.conceallevel = 2
             vim.wo.concealcursor = "c"
 
+            -- Performance, etc
             vim.g.vimtex_syntax_treesitter = 0
+            vim.g.vimtex_indent_enabled = 0
+            vim.g.vimtex_fold_enabled = 0
+            vim.g.vimtex_imaps_enabled = 0
+            vim.g.vimtex_text_obj_enabled = 0
         end,
     },
 }

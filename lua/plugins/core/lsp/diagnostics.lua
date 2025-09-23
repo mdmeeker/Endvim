@@ -4,8 +4,11 @@ return {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         config = function()
             require("lsp_lines").setup()
+
+            vim.diagnostic.config({
+                virtual_text = false,
+            })
         end,
-        event = "LspAttach",
     },
 
     {
@@ -45,9 +48,14 @@ return {
 
             -- Diagnostics
             table.insert(sources, null_ls.builtins.diagnostics.selene) -- Lua
-            table.insert(sources, null_ls.builtins.diagnostics.ruff) -- Python
-            table.insert(sources, null_ls.builtins.diagnostics.clang_check) -- C/C++
+
+            -- TODO: Python diagnostics
+            -- table.insert(sources, null_ls.builtins.diagnostics.ruff) -- Python
+
+            table.insert(sources, null_ls.builtins.diagnostics.cppcheck) -- C/C++
             table.insert(sources, null_ls.builtins.diagnostics.markdownlint) -- Markdown
+            -- table.insert(sources, null_ls.builtins.diagnostics.chktex)
+
             -- table.insert(sources, null_ls.builtins.diagnostics.actionlint) -- Github actions
             -- table.insert(sources, null_ls.builtins.diagnostics.checkmake) -- Makefile
             -- table.insert(sources, null_ls.builtins.diagnostics.cmake_lint) -- Cmake
@@ -60,7 +68,9 @@ return {
             null_ls.setup({
                 sources = sources,
                 diagnostics_format = "[#{c}] #{m} (#{s})",
-                debug = false,
+                debug = true,
+                debounce = 250,
+                timeout = 5000,
             })
         end,
         event = { "BufReadPre", "BufNewFile" },

@@ -46,9 +46,11 @@
   "rainbow-delimiters.nvim": { "branch": "master", "commit": "687ef75fdbd497eabc9eea92b52e7b4d403b3319" },
   "render-markdown.nvim": { "branch": "main", "commit": "67f2c7c8850bb11eefa6b22054a6f4cef1146de2" },
   "smear-cursor.nvim": { "branch": "main", "commit": "4b86df8a0c5f46e708616b21a02493bb0e47ecbd" },
+  "startuptime.vim": { "branch": "master", "commit": "dfa57f522d6f61793fe5fea65bca7484751b8ca2" },
   "telescope.nvim": { "branch": "master", "commit": "b4da76be54691e854d3e0e02c36b0245f945c2c7" },
   "toggleterm.nvim": { "branch": "main", "commit": "9a88eae817ef395952e08650b3283726786fb5fb" },
   "trouble.nvim": { "branch": "main", "commit": "3fb3bd737be8866e5f3a170abc70b4da8b5dd45a" },
+  "vim-startuptime": { "branch": "master", "commit": "b6f0d93f6b8cf6eee0b4c94450198ba2d6a05ff6" },
   "vimtex": { "branch": "master", "commit": "77f31bd02cec678823c8614e6400db97390b5ce7" },
   "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" },
   "zen-mode.nvim": { "branch": "main", "commit": "863f150ca321b3dd8aa1a2b69b5f411a220e144f" }

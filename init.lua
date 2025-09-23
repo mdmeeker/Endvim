@@ -4,8 +4,20 @@ if not vim.loop.fs_stat(lazypath) then
 end
 
 vim.opt.rtp:prepend(lazypath)
+
 require("config.options")
 require("config.keymaps")
+require("config.logging")
+require("config.safety")
+require("config.debug")
+
+local safety = require("config.safety")
+safety.setup()
+
+local debug = require("config.debug")
+debug.setup_commands()
+
+-- Load plugins with Lazy
 require("lazy").setup(
     "plugins",
     {
