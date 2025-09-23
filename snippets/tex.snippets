@@ -2,6 +2,19 @@
 # latex snippets
 
 
+
+
+################################################################
+# Quick Commands
+snippet np newpage command
+    \\newpage
+
+
+snippet comment comment line
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+################################################################
+# Environments
 snippet begin \begin{} ... \end{} block
 	\\begin{${1:env}}
 		$2
@@ -32,7 +45,7 @@ snippet equ unnumbered equation environment
 		$1
 	\\end{equation*}
 
-snippet ps problem and solution
+snippet ps problem and solution environments
 	\\begin{problem}[]
 		$1
 	\\end{problem}
@@ -40,12 +53,12 @@ snippet ps problem and solution
         $2
 	\\end{solution}
 
-snippet def definition
+snippet def definition environment
     \\begin{definition}[$1]
         $2
     \\end{definition}
 
-snippet rem remark
+snippet rem remark environment
     \\begin{remark}[$1]
         $2
     \\end{remark}
@@ -60,11 +73,7 @@ snippet exam example
         $2
     \\end{example}
 
-snippet text text box
-    \text{$1}
 
-snippet comment comment line
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 snippet enum enumerate environment
 	\\begin{enumerate}
@@ -127,29 +136,35 @@ snippet ssub* \subsubsection*
 snippet it italic text
 	\\textit{$1}
 
-snippet bf bold face text
+snippet bold bold face text
 	\\textbf{$1}
 
 snippet under underline text
 	\\underline{$1}
 
+snippet ft footnote
+	\\footnote{$1}
+
+################################################################
+# Math mode
+
 snippet over overline text
 	\\overline{$1}
 
-snippet em emphasize text
-	\\emph{$1}
-
-snippet mf mathfrak
+snippet frak mathfrak
 	\\mathfrak{$1}
 
-snippet mc mathcal
+snippet cal mathcal
 	\\mathcal{$1}
 
-snippet ms mathscr
+snippet scr mathscr
 	\\mathscr{$1}
 
-snippet ft \footnote
-	\\footnote{$1}
+snippet bf mathbf
+	\\mathbf{$1}
+
+snippet text text box
+    \text{$1}
 
 snippet frac \frac{}{}
 	\\frac{${1:num}}{${2:denom}} $0
@@ -160,26 +175,30 @@ snippet sum \sum^{}_{}
 snippet lim \lim_{}
 	\\lim_{${1:n \\to \\infty}} $0
 
-snippet \{ \{ \}
-	\\{ $1 \\}
+# PAIRS
 
 snippet lr left right
-	\\left${1} ${0:${VISUAL}} \\right$1
+	\\left${1} $0 \\right$1
 
-snippet lr( left( right)
-	\\left( ${1:${VISUAL}} \\right)
+snippet lrp left( right)
+	\\left( $1 \\right)
 
-snippet lr| left| right|
-	\\left| ${1:${VISUAL}} \\right|
+snippet lrbar left| right|
+	\\left| $1 \\right|
 
-snippet lr{ left\{ right\}
-	\\left\\{ ${1:${VISUAL}} \\right\\}
+snippet lrcb left\{ right\}
+	\\left\\{ $1 \\right\\}
 
-snippet lr[ left[ right]
-	\\left[ ${1:${VISUAL}} \\right]
+snippet lrb left[ right]
+	\\left[ $1 \\right]
 
-snippet lra langle rangle, inner product
+snippet lra langle rangle
 	\\langle ${1:${VISUAL}} \\rangle
+
+snippet norm lr norm
+    \\left\\| $1 \\right\\|
+
+# ENVS
 
 snippet lst
 	\\begin{listing}[language=${1:language}]
@@ -195,8 +214,11 @@ snippet lim limit
 snippet pdv partial derivation
 	\\frac{\\partial $1}{\\partial $2} $0
 
-snippet dv derivative
+snippet drv derivative
 	\\frac{\textrm{d} $1}{\textrm{d} $2} $0
+
+snippet dx differential
+    ~\\textrm{d}$1
 
 snippet sum summation
 	\\sum_{$1}^{$2} $0
@@ -217,7 +239,7 @@ snippet bm math bold
 	\\bm{$1}
 
 snippet int integral
-	\\int_{{$1}}^{{$2}} {$3} \\: \textrm{d}{$4}
+	\\int_{{$1}}^{{$2}} {$3} ~\textrm{d}{$4}
 
 snippet ra rightarrow
 	\\rightarrow {$0}

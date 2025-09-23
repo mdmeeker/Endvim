@@ -23,15 +23,37 @@ vim.keymap.set("n", "<leader>le", "<cmd>VimtexErrors<CR>", { desc = "Show errors
 vim.keymap.set("n", "<leader>lt", "<cmd>VimtexTocOpen<CR>", { desc = "Table of contents" })
 vim.keymap.set("n", "<leader>lc", "<cmd>VimtexClean<CR>", { desc = "Clean aux files" })
 
--- Org mode keymaps
-vim.keymap.set(
-    "n", 
-    "<leader>on", 
-    function ()
-        vim.cmd("vsp ~/org/notes.org")
+-- Org keymaps
+vim.keymap.set("n", "<leader>oa", "<cmd>OrgAgenda<CR>", { desc = "Open org agenda" })
+vim.keymap.set("n", "<leader>oc", "<cmd>OrgCapture<CR>", { desc = "Open org capture" })
+vim.keymap.set("n", "<leader>or", "<cmd>vsplit ~/notes/refile.org<CR>", { desc = "Open refile.org" })
+vim.keymap.set("n", "<leader>ot", "<cmd>vsplit ~/notes/todo.org<CR>", { desc = "Open todo.org" })
+vim.keymap.set("n", "<leader>od", "<cmd>vsplit ~/notes<CR>", { desc = "Open notes directory" })
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "org" },
+    callback = function()
+        -- Date/time insertion
+        vim.keymap.set("n", "<leader>oD", "<cmd>OrgDate<CR>", { desc = "Insert date", buffer = true })
+        vim.keymap.set("n", "<leader>oT", "<cmd>OrgTime<CR>", { desc = "Insert time", buffer = true })
+
+        -- Scheduling and deadlines
+        vim.keymap.set("n", "<leader>os", "<cmd>OrgSchedule<CR>", { desc = "Schedule task", buffer = true })
+        vim.keymap.set("n", "<leader>oE", "<cmd>OrgDeadline<CR>", { desc = "Set deadline", buffer = true })
+
+        -- Priority and tags
+        vim.keymap.set("n", "<leader>op", "<cmd>OrgPriority<CR>", { desc = "Set priority", buffer = true })
+        vim.keymap.set("n", "<leader>og", "<cmd>OrgTags<CR>", { desc = "Set tags", buffer = true })
+
+        -- Navigation
+        vim.keymap.set("n", "<leader>on", "<cmd>OrgNext<CR>", { desc = "Next heading", buffer = true })
+        vim.keymap.set("n", "<leader>oN", "<cmd>OrgPrev<CR>", { desc = "Previous heading", buffer = true })
+
+        -- Promotes/Demotes'
+        vim.keymap.set("n", "<leader>o>", "<cmd>OrgPromote<CR>", { desc = "Promote heading", buffer = true })
+        vim.keymap.set("n", "<leader>o<", "<cmd>OrgDemote<CR>", { desc = "Demote heading", buffer = true })
     end,
-    { desc = "Open org notes" }
-)
+})
 
 
 -- File explorers

@@ -18,17 +18,6 @@ M.setup_autosave = function()
             end
         end,
     })
-    
-    -- Periodic auto-save
-    vim.api.nvim_create_autocmd("CursorHold", {
-        group = autosave_group,
-        pattern = "*",
-        callback = function()
-            if vim.bo.modified and not vim.bo.readonly then
-                vim.cmd("silent! write")
-            end
-        end,
-    })
 end
 
 -- Recovery system

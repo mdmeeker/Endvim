@@ -16,12 +16,12 @@ return {
 
             wk.add({
                 { "<leader>b", group = "Buffer" },
-                { "<leader>l", group = "LaTeX/LSP" },
+                { "<leader>l", group = "LaTeX and LSP" },
                 { "<leader>t", group = "Terminal" },
                 { "<leader>g", group = "Git" },
-                { "<leader>z", group = "Zen Mode" },
+                { "<leader>z", group = "Toggle Zen Mode" },
                 { "<leader>f", group = "File/Find" },
-                { "<leader>o", group = "Neorg" },
+                { "<leader>o", group = "Org" },
             })
         end,
     },

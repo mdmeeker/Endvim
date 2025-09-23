@@ -44,6 +44,10 @@ vim.opt.shiftwidth = 4      -- Number of spaces for auto-indent
 vim.opt.expandtab = true    -- Use spaces instead of tabs
 vim.opt.softtabstop = 4     -- Number of spaces for a tab in insert mode
 
+-- Splitting behavior
+vim.opt.splitbelow = true  -- Split below instead of above
+vim.opt.splitright = true  -- Split right instead of left
+
 -- Create necessary directories
 local function ensure_dir(path)
     if vim.fn.isdirectory(path) == 0 then

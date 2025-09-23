@@ -1,5 +1,5 @@
 return {
     { import = "plugins.lang.anki" },
     { import = "plugins.lang.latex" },
-    { import = "plugins.lang.neorg" },
+    { import = "plugins.lang.org" },
 }
