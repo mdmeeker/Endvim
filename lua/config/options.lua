@@ -23,15 +23,15 @@ vim.opt.backupdir = vim.fn.stdpath("state") .. "/backup"  -- Centralized backup 
 vim.opt.writebackup = true              -- Write backup before overwriting
 vim.opt.clipboard = "unnamedplus"       -- Use system clipboard for yank/put operations
 
--- Performance and responsiveness
+-- Performance and responsiveness (optimized for stability)
 vim.opt.timeoutlen = 300                -- Time to wait for key sequence completion (ms)
-vim.opt.updatetime = 100                -- Time to write swap file and trigger CursorHold (ms)
-vim.opt.redrawtime = 3000               -- Time to wait to redraw screen (ms)
+vim.opt.updatetime = 250                -- Increased from 100ms to reduce frequent updates
+vim.opt.redrawtime = 1000              -- Reduced from 3000ms to prevent hanging
 vim.opt.ttimeoutlen = 10               -- Time to wait for key codes (ms)
 
 -- Logging and Debugging
-vim.opt.verbose = 0 -- Default verbosity level
-vim.opt.verbosefile = vim.fn.stdpath("state") .. "/nvim.log"
+vim.opt.verbose = 0                     -- Default verbosity level
+vim.opt.verbosefile = vim.fn.stdpath("state") .. "/nvim-verbose.log"  -- Separate from custom logging
 
 -- Code folding
 vim.opt.foldmethod = "expr"             -- Use expression-based folding
@@ -39,22 +39,26 @@ vim.opt.foldexpr = "nvim_treesitter#foldexpr()"  -- Use TreeSitter for folding
 vim.opt.foldenable = false              -- Start with all folds open
 
 -- Tab and indentation
-vim.opt.tabstop = 4         -- Number of spaces for a tab
-vim.opt.shiftwidth = 4      -- Number of spaces for auto-indent
-vim.opt.expandtab = true    -- Use spaces instead of tabs
-vim.opt.softtabstop = 4     -- Number of spaces for a tab in insert mode
+vim.opt.tabstop = 4                     -- Number of spaces for a tab
+vim.opt.shiftwidth = 4                  -- Number of spaces for auto-indent
+vim.opt.expandtab = true                -- Use spaces instead of tabs
+vim.opt.softtabstop = 4                 -- Number of spaces for a tab in insert mode
 
 -- Splitting behavior
-vim.opt.splitbelow = true  -- Split below instead of above
-vim.opt.splitright = true  -- Split right instead of left
+vim.opt.splitbelow = true                -- Split below instead of above
+vim.opt.splitright = true               -- Split right instead of left
 
--- Create necessary directories
+-- Create necessary directories with error handling
 local function ensure_dir(path)
     if vim.fn.isdirectory(path) == 0 then
-        vim.fn.mkdir(path, "p")
+        local success = pcall(vim.fn.mkdir, path, "p")
+        if not success then
+            vim.notify("Failed to create directory: " .. path, vim.log.levels.ERROR)
+        end
     end
 end
 
+-- Only create directories that aren't handled elsewhere
 ensure_dir(vim.fn.stdpath("state") .. "/swap")
 ensure_dir(vim.fn.stdpath("state") .. "/backup")
-ensure_dir(vim.fn.stdpath("state") .. "/logs")
+-- Note: /logs directory is created by logging.lua

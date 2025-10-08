@@ -29,49 +29,17 @@ return {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
         dependencies = { "williamboman/mason.nvim" },
         config = function()
-            local mason_tools = {}
-            -- CC
-            table.insert(mason_tools, "clangd")
-            table.insert(mason_tools, "clang-format")
-            table.insert(mason_tools, "clang-check")
-            table.insert(mason_tools, "codelldb")
-            
-            -- Julia
-            table.insert(mason_tools, "julia-lsp")
-
-            -- JSON
-            table.insert(mason_tools, "json-lsp")
-            
-            -- Latex
-            table.insert(mason_tools, "texlab")
-            
-            -- Lua
-            table.insert(mason_tools, "lua-language-server")
-            table.insert(mason_tools, "stylua")
-            table.insert(mason_tools, "selene")
-            
-            -- Markdown
-            table.insert(mason_tools, "marksman")
-            table.insert(mason_tools, "markdownlint")
-
-            -- Python
-            table.insert(mason_tools, "ruff")
-            table.insert(mason_tools, "python-lsp-server")
-            table.insert(mason_tools, "debugpy")
-
-            -- Rust
-            table.insert(mason_tools, "rust-analyzer")
-            table.insert(mason_tools, "rustfmt")
-
-            -- Bash/sh
-            table.insert(mason_tools, "bash-language-server")
-            table.insert(mason_tools, "shfmt")
-
-            -- YAML
-            table.insert(mason_tools, "yaml-language-server")
-
             require("mason-tool-installer").setup({
-                ensure_installed = mason_tools,
+                ensure_installed = {
+                    "clangd", "clang-format", "clang-check", "codelldb",
+                    "julia-lsp", "json-lsp", "texlab",
+                    "lua-language-server", "stylua", "selene",
+                    "marksman", "markdownlint",
+                    "ruff", "python-lsp-server", "debugpy",
+                    "rust-analyzer", "rustfmt",
+                    "bash-language-server", "shfmt",
+                    "yaml-language-server"
+                },
                 auto_update = false,
                 run_on_start = true,
                 start_delay = 3000,

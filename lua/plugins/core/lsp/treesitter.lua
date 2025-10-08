@@ -14,77 +14,43 @@ return {
         },
         build = ":TSUpdate",
         dependencies = {
-            { "nvim-treesitter/nvim-treesitter-textobjects", cmd = "TSPlayground" },
-            "HiPhish/rainbow-delimiters.nvim",
+            "nvim-treesitter/nvim-treesitter-textobjects",
             "JoosepAlviste/nvim-ts-context-commentstring",
             "nvim-treesitter/nvim-treesitter-refactor",
-            "nvim-treesitter/nvim-treesitter-textobjects",
             { "ggandor/leap-ast.nvim", optional = true },
+            {
+                "HiPhish/rainbow-delimiters.nvim",
+                version = "*",
+                optional = true,
+            },
         },
-        opts = {
-            ensure_installed = { "cpp", "python", "julia", "typst", "org", "markdown", "markdown_inline" },
-            highlight = { enable = true, additional_vim_regex_highlighting = { "org", "markdown", "markdown_inline" } },
-            fold = { enable = true }
-        },
-
         config = function()
+            -- Context commentstring setup
             vim.g.skip_ts_context_commentstring_module = true
             require("ts_context_commentstring").setup({
                 enable_autocmd = false,
             })
 
-
-            local treesitter_filetypes = {
-                "vimdoc", "fennel", "vim", "regex", "query",
-                "c", "cpp", "rust", "toml", "lua", "python",
-                "julia", "bash", "markdown", "markdown_inline",
-                "json", "yaml", "latex", "typst", "git_rebase",
-                "gitattributes", "gitcommit",
-            }
-
-            local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-
-            -- Neorg parser
-            parser_config.norg = {
-                install_info = {
-                    url = "https://github.com/nvim-neorg/tree-sitter-norg",
-                    files = { "src/parser.c", "src/scanner.cc" },
-                    branch = "dev",
-                    use_makefile = true,
-                },
-            }
-
-            parser_config.norg_meta = {
-                install_info = {
-                    url = "https://github.com/nvim-neorg/tree-sitter-norg-meta",
-                    files = { "src/parser.c" },
-                    branch = "main",
-                }
-            }
-
-            parser_config.norg_table = {
-                install_info = {
-                    url = "https://github.com/nvim-neorg/tree-sitter-norg-table",
-                    files = { "src/parser.c" },
-                    branch = "main",
-                }
-            }
-
-            table.insert(treesitter_filetypes, "norg")
-            table.insert(treesitter_filetypes, "norg_meta")
-            table.insert(treesitter_filetypes, "norg_table")
-
+            -- Leap AST integration
             local has_leap_ast, leap_ast = pcall(require, "leap-ast")
             if has_leap_ast then
                 vim.keymap.set({ "n", "x", "o" }, "gs", leap_ast.leap, { desc = "Leap AST" })
             end
 
+            -- Main treesitter configuration
             require("nvim-treesitter.configs").setup({
-                ensure_installed = treesitter_filetypes,
+                ensure_installed = {
+                    "vimdoc", "fennel", "vim", "regex", "query",
+                    "c", "cpp", "rust", "toml", "lua", "python",
+                    "julia", "bash", "markdown", "markdown_inline",
+                    "json", "yaml", "latex", "typst", "git_rebase",
+                    "gitattributes", "gitcommit",
+                },
 
                 highlight = {
                     enable = true,
                     use_languagetree = true,
+                    additional_vim_regex_highlighting = { "org", "markdown", "markdown_inline" },
                     disable = { "latex" },
                 },
 
@@ -92,7 +58,7 @@ return {
                     enable = true,
                     disable = { "latex" },
                 },
-               
+
                 refactor = {
                     enable = true,
                     keymaps = {
@@ -103,17 +69,12 @@ return {
                 query_linter = {
                     enable = true,
                     use_virtual_text = true,
-                    lint_events = { "BufWrite", "CursorHold" },
+                    lint_events = { "BufWrite" },
                 },
 
                 rainbow = {
                     enable = true,
-                    query = {
-                        "rainbow-parens",
-                        html = "rainbow-tags",
-                        tsx = "rainbow-tags",
-                        vue = "rainbow-tags",
-                    }
+                    query = "rainbow-parens",
                 },
 
                 incremental_selection = {

@@ -15,16 +15,43 @@ return {
 				build = "make install_jsregexp",
 
 				config = function()
-					-- Load snippets from snippets/
-					require("luasnip.loaders.from_snipmate").load({
-						paths = { "~/.config/nvim/snippets/" },
-					})
+					-- Safe snippet loading with error handling
+					local success, loader = pcall(require, "luasnip.loaders.from_snipmate")
+					if success then
+						local snippet_path = vim.fn.expand("~/.config/nvim/snippets/")
+						if vim.fn.isdirectory(snippet_path) == 1 then
+							local load_success = pcall(loader.load, {
+								paths = { snippet_path },
+							})
+							if not load_success then
+								vim.notify("Failed to load snippets from " .. snippet_path, vim.log.levels.WARN)
+							end
+						else
+							vim.notify("Snippet directory not found: " .. snippet_path, vim.log.levels.WARN)
+						end
+					else
+						vim.notify("Failed to load LuaSnip loader", vim.log.levels.ERROR)
+					end
 
 					vim.api.nvim_create_user_command("ReloadSnippets", function()
-						require("luasnip.loaders.from_snipmate").load({
-							paths = { "~/.config/nvim/snippets/" },
-						})
-						print("Snippets reloaded for " .. vim.bo.filetype)
+						local success, loader = pcall(require, "luasnip.loaders.from_snipmate")
+						if success then
+							local snippet_path = vim.fn.expand("~/.config/nvim/snippets/")
+							if vim.fn.isdirectory(snippet_path) == 1 then
+								local load_success = pcall(loader.load, {
+									paths = { snippet_path },
+								})
+								if load_success then
+									print("Snippets reloaded for " .. vim.bo.filetype)
+								else
+									vim.notify("Failed to reload snippets", vim.log.levels.ERROR)
+								end
+							else
+								vim.notify("Snippet directory not found", vim.log.levels.ERROR)
+							end
+						else
+							vim.notify("Failed to load snippet loader", vim.log.levels.ERROR)
+						end
 					end, { desc = "Reload snippets for current filetype" })
 				end,
 			},
@@ -43,10 +70,20 @@ return {
 			table.insert(cmp_sources, { name = "nvim_lsp_signature_help", group_index = 1 })
 			table.insert(cmp_sources, { name = "avante", group_index = 1 })
 
+			-- Safe buffer access function
 			local function has_words_before()
-				local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-				return col ~= 0
-					and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+				local success, line, col = pcall(vim.api.nvim_win_get_cursor, 0)
+				if not success or col == 0 then
+					return false
+				end
+				
+				local success, lines = pcall(vim.api.nvim_buf_get_lines, 0, line - 1, line, true)
+				if not success or #lines == 0 then
+					return false
+				end
+				
+				local char = lines[1]:sub(col, col)
+				return char and char:match("%s") == nil
 			end
 
 			-- Icons
@@ -97,7 +134,7 @@ return {
 					entries = {
 						name = "custom",
 						selection_order = "near_cursor",
-                        max_item_count = 7,
+						max_item_count = 7,
 					},
 				},
 
@@ -115,7 +152,10 @@ return {
 
 				snippet = {
 					expand = function(args)
-						require("luasnip").lsp_expand(args.body)
+						local success = pcall(luasnip.lsp_expand, args.body)
+						if not success then
+							vim.notify("Failed to expand snippet", vim.log.levels.WARN)
+						end
 					end,
 				},
 
@@ -128,15 +168,15 @@ return {
 						select = false,
 					}),
 					["<Tab>"] = cmp.mapping(function(fallback)
-						if require("luasnip").expand_or_jumpable() then
-							require("luasnip").expand_or_jump()
+						if luasnip.expand_or_jumpable() then
+							luasnip.expand_or_jump()
 						else
 							fallback()
 						end
 					end, { "i", "s", "c" }),
 					["<S-Tab>"] = cmp.mapping(function(fallback)
-						if require("luasnip").jumpable(-1) then
-							require("luasnip").jump(-1)
+						if luasnip.jumpable(-1) then
+							luasnip.jump(-1)
 						else
 							fallback()
 						end
@@ -152,6 +192,22 @@ return {
 						vim_item.kind = kind_icons[vim_item.kind] or vim_item.kind
 						return vim_item
 					end,
+				},
+			})
+
+			-- Cmdline completion setup
+			cmp.setup.cmdline("/", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = {
+					{ name = "buffer", group_index = 1 }
+				},
+			})
+			
+			cmp.setup.cmdline(":", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = {
+					{ name = "path" },
+					{ name = "cmdline", group_index = 1 }
 				},
 			})
 		end,

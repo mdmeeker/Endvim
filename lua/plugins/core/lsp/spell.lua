@@ -1,10 +1,17 @@
 -- Enable spell checking only for specific filetypes
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "markdown", "text", "gitcommit", "org" },
+    pattern = { "markdown", "text", "gitcommit", "org", "tex" },
     callback = function()
         vim.opt_local.spell = true
         vim.opt_local.spelllang = { "en_us" }
-        vim.opt_local.spelloptions = { "camel", "noplainbuffer" }
+        -- Improved spell options for better LaTeX support
+        vim.opt_local.spelloptions = { 
+            "camel",           -- Allow camelCase words
+            "noplainbuffer",   -- Don't check plain text buffers
+            "nospellcap"       -- Don't require capitalization
+        }
+        -- Reduce spell checking frequency and suggestions
+        vim.opt_local.spellsuggest = "best,9"  -- Only show best 9 suggestions
     end,
 })
 

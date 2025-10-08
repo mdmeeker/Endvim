@@ -28,6 +28,17 @@ return {
             vim.g.vimtex_fold_enabled = 0
             vim.g.vimtex_imaps_enabled = 0
             vim.g.vimtex_text_obj_enabled = 0
+
+            -- Multi-file project configuration
+            vim.g.vimtex_main_file_search_method = 'project'
+            vim.g.vimtex_main_file_search_depth = 3
+            vim.g.vimtex_main_file_search_patterns = {
+                'main.tex',
+                'document.tex',
+                'thesis.tex',
+                'paper.tex',
+                '%.tex$'
+            }
         end,
     },
 }

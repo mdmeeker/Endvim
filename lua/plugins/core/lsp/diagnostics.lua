@@ -7,6 +7,20 @@ return {
 
             vim.diagnostic.config({
                 virtual_text = false,
+                underline = { severity = { min = vim.diagnostic.severity.INFO } },
+                signs = { severity = { min = vim.diagnostic.severity.HINT } },
+                float = {
+                    show_header = false,
+                    source = true,
+                },
+                update_in_insert = false,
+                severity_sort = true,
+                signs = {
+                    Error = { text = "󰅚", texthl = "DiagnosticSignError" },
+                    Warn = { text = "󰀪", texthl = "DiagnosticSignWarn" },
+                    Info = { text = "󰋽", texthl = "DiagnosticSignInfo" },
+                    Hint = { text = "󰌶", texthl = "DiagnosticSignHint" },
+                },
             })
         end,
     },
@@ -15,30 +29,6 @@ return {
         "nvimtools/none-ls.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
-            vim.diagnostic.config({
-                underline = { severity = { min = vim.diagnostic.severity.INFO } },
-                signs = { severity = { min = vim.diagnostic.severity.HINT } },
-                virtual_text = false,
-                float = {
-                    show_header = false,
-                    source = true,
-                },
-                update_in_insert = false,
-                severity_sort = true,
-            })
-
-            local signs = {
-                Error = "󰅚",  -- or your preferred error icon
-                Warn = "󰀪",   -- or your preferred warn icon  
-                Info = "󰋽",   -- or your preferred info icon
-                Hint = "󰌶",   -- or your preferred hint icon
-            }
-
-            for type, icon in pairs(signs) do
-                local hl = "DiagnosticSign" .. type
-                vim.fn.sign_define(hl, { text = icon, texthl = hl })
-            end
-
             vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Open diagnostics at line" })
             vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostics" })
             vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostics" })
@@ -48,18 +38,8 @@ return {
 
             -- Diagnostics
             table.insert(sources, null_ls.builtins.diagnostics.selene) -- Lua
-
-            -- TODO: Python diagnostics
-            -- table.insert(sources, null_ls.builtins.diagnostics.ruff) -- Python
-
             table.insert(sources, null_ls.builtins.diagnostics.cppcheck) -- C/C++
             table.insert(sources, null_ls.builtins.diagnostics.markdownlint) -- Markdown
-            -- table.insert(sources, null_ls.builtins.diagnostics.chktex)
-
-            -- table.insert(sources, null_ls.builtins.diagnostics.actionlint) -- Github actions
-            -- table.insert(sources, null_ls.builtins.diagnostics.checkmake) -- Makefile
-            -- table.insert(sources, null_ls.builtins.diagnostics.cmake_lint) -- Cmake
-
 
             -- Code actions
             table.insert(sources, null_ls.builtins.code_actions.gitsigns)
@@ -68,14 +48,13 @@ return {
             null_ls.setup({
                 sources = sources,
                 diagnostics_format = "[#{c}] #{m} (#{s})",
-                debug = true,
+                debug = false,
                 debounce = 250,
                 timeout = 5000,
             })
         end,
         event = { "BufReadPre", "BufNewFile" },
     },
-
 
     {
         "folke/trouble.nvim",
