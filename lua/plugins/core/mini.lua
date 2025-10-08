@@ -3,11 +3,6 @@ return {
         "nvim-mini/mini.nvim",
         version = false,
         config = function()
-            require("mini.animate").setup({
-                cursor = { enable = false },
-                resize = { enable = false },
-            })
-
             require("mini.surround").setup()
 
             require("mini.files").setup({
@@ -47,27 +42,6 @@ return {
             require("mini.tabline").setup({
                 tabpage_section = "left",
                 show_icons = true,
-            })
-
-
-            require("mini.pairs").setup({
-                modes = { insert = true, command = true, terminal = true },
-                mappings = {
-                    ['('] = { action = 'open', pair = '()', neigh_pattern = '[^\\].' },
-                    ['['] = { action = 'open', pair = '[]', neigh_pattern = '[^\\].' },
-                    ['{'] = { action = 'open', pair = '{}', neigh_pattern = '[^\\].' },
-                    [')'] = { action = 'close', pair = '()', neigh_pattern = '[^\\].' },
-                    [']'] = { action = 'close', pair = '[]', neigh_pattern = '[^\\].' },
-                    ['}'] = { action = 'close', pair = '{}', neigh_pattern = '[^\\].' },
-                    ['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '[^\\].' },
-                    ['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\].' },
-                    ['$'] = { 
-                        action = 'closeopen', 
-                        pair = '$$', 
-                        neigh_pattern = '[^\\].',
-                        filetype = { 'tex', 'latex' }
-                    },
-                },
             })
 
             -- Disables single quote pairing in TeX files

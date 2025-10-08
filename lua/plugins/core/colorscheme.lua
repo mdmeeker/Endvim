@@ -1,25 +1,46 @@
 return {
     {
-        "aktersnurra/no-clown-fiesta.nvim",
+        "vague2k/vague.nvim",
         lazy = false,
         priority = 1000,
         config = function()
             local opts = {
-                transparent = true,
-                styles = {
-                    comments = {},
-                    functions = {},
-                    keywords = {},
-                    lsp = { underline = true },
-                    match_paren = { underline = true },
-                    type = { bold = true },
-                    variables = {}
+                transparent = true, -- Keep your transparent background preference
+                style = {
+                    comments = "italic",
+                    functions = "none",
+                    keywords = "none",
+                    lsp = "underline",
+                    match_paren = "underline",
+                    type = "bold",
+                    variables = "none"
                 },
             }
-            require("no-clown-fiesta").setup(opts)
-            vim.cmd("colorscheme no-clown-fiesta")
+            require("vague").setup(opts)
+            vim.cmd("colorscheme vague")
         end
     },
+    -- {
+    --     "aktersnurra/no-clown-fiesta.nvim",
+    --     lazy = false,
+    --     priority = 1000,
+    --     config = function()
+    --         local opts = {
+    --             transparent = true,
+    --             styles = {
+    --                 comments = {},
+    --                 functions = {},
+    --                 keywords = {},
+    --                 lsp = { underline = true },
+    --                 match_paren = { underline = true },
+    --                 type = { bold = true },
+    --                 variables = {}
+    --             },
+    --         }
+    --         require("no-clown-fiesta").setup(opts)
+    --         vim.cmd("colorscheme no-clown-fiesta")
+    --     end
+    -- },
     -- Colorscheme
     -- {
     --     "sainnhe/everforest",
