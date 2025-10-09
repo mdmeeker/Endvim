@@ -4,14 +4,15 @@ vim.api.nvim_create_autocmd("FileType", {
     callback = function()
         vim.opt_local.spell = true
         vim.opt_local.spelllang = { "en_us" }
-        -- Improved spell options for better LaTeX support
-        vim.opt_local.spelloptions = { 
-            "camel",           -- Allow camelCase words
-            "noplainbuffer",   -- Don't check plain text buffers
-            "nospellcap"       -- Don't require capitalization
+        vim.opt_local.spelloptions = {
+            "camel",
+            "noplainbuffer",
+            "nospellcap",
         }
-        -- Reduce spell checking frequency and suggestions
-        vim.opt_local.spellsuggest = "best,9"  -- Only show best 9 suggestions
+        vim.opt_local.spellsuggest = "best,9"
+
+        -- For LaTeX, rely on vimtex's syntax groups (NoSpell on commands/math)
+        -- No extra :syntax rules here; vimtex already marks commands/math as @NoSpell
     end,
 })
 
@@ -23,7 +24,7 @@ if type(current_spellfile) == "table" then
 else
     vim.opt.spellfile = {
         current_spellfile,
-        vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
+        vim.fn.stdpath("config") .. "/spell/en.utf-8.add",
     }
 end
 

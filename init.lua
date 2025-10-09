@@ -5,6 +5,11 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
+vim.cmd([[
+  syntax enable
+  filetype plugin indent on
+]])
+
 require("config.options")
 require("config.keymaps")
 require("config.logging")
