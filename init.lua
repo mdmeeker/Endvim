@@ -5,22 +5,8 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
-vim.cmd([[
-  syntax enable
-  filetype plugin indent on
-]])
-
 require("config.options")
 require("config.keymaps")
-require("config.logging")
-require("config.safety")
-require("config.debug")
-
-local safety = require("config.safety")
-safety.setup()
-
-local debug = require("config.debug")
-debug.setup_commands()
 
 -- Load plugins with Lazy
 require("lazy").setup(
