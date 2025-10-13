@@ -23,8 +23,3 @@ vim.keymap.set("n", "<leader>fT", ":NvimTreeFocus<CR>", { desc = "Focus nvim-tre
 
 -- Terminal keymaps
 vim.keymap.set("n", "<leader>tt", "<cmd>ToggleTerm direction=float<CR>", { desc = "Toggle floating terminal" })
-
--- Org mode keymaps
-vim.keymap.set("n", "<leader>or", "<cmd>vsplit ~/org/refile.org<CR>", { desc = "Open refile.org" })
-vim.keymap.set("n", "<leader>ot", "<cmd>vsplit ~/notes/todo.org<CR>", { desc = "Open todo.org" })
-vim.keymap.set("n", "<leader>od", "<cmd>vsplit ~/notes<CR>", { desc = "Open notes directory" })

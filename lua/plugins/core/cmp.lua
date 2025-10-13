@@ -7,6 +7,7 @@ return {
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
             "saadparwaiz1/cmp_luasnip",
+            "onsails/lspkind.nvim",
             {
                 "L3MON4D3/LuaSnip",
                 event = { 
@@ -20,20 +21,43 @@ return {
                 end
             },
         },
-        -- TODO: Play with settings here
         config = function()
             local cmp = require("cmp")
             local luasnip = require("luasnip")
 
-            local cmp_sources = {
-                { name = "nvim_lsp" },
-                { name = "luasnip" },
-                { name = "buffer" },
-                { name = "path" },
-            }
+            local cmp_sources = cmp.config.sources({
+                { name = "nvim_lsp", max_item_count = 6 },
+                { name = "luasnip",  max_item_count = 6 },
+            }, {
+                { name = "buffer",   max_item_count = 3, keyword_length = 3 },
+                { name = "path",     max_item_count = 3 },
+            })
             
             cmp.setup({
                 sources = cmp_sources,
+
+                performance = {
+                    max_view_entries = 8,  -- show at most 8 items in the menu
+                },
+
+                window = {
+                    completion = {
+                        winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+                        col_offset = -3,
+                        side_padding = 0,
+                    },
+                },
+                formatting = {
+                    fields = { "kind", "abbr", "menu" },
+                    format = function(entry, vim_item)
+                        local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+                        local strings = vim.split(kind.kind, "%s", { trimempty = true })
+                        kind.kind = " " .. (strings[1] or "") .. " "
+                        kind.menu = "    (" .. (strings[2] or "") .. ")"
+                
+                        return kind
+                    end,
+                },
 
                 mapping = cmp.mapping.preset.insert({
                     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
