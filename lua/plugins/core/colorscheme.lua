@@ -8,7 +8,7 @@ return {
                 transparent = true,
                 style = {
                     comments = "italic",
-                    functions = "none",
+                    functions = "bold",
                     keywords = "none",
                     lsp = "underline",
                     match_paren = "underline",
